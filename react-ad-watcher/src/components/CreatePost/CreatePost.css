@@ -1,0 +1,19 @@
+.create-post-form {
+  vertical-align: middle;
+  width: 100%;
+  max-width: 350px;
+  padding: 15px;
+  margin: auto;
+}
+.cd-bg {
+  color: black;
+  background: transparent !important;
+  background-image: linear-gradient(
+    rgb(104, 104, 104),
+    rgba(100, 100, 100, 0.25)
+  ) !important;
+}
+.cd-body {
+  margin: "20px" auto;
+  padding: 0 !important;
+}

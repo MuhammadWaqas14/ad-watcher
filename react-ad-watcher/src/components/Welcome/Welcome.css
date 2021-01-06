@@ -1,0 +1,10 @@
+.post-card {
+  color: black;
+  background: rgb(216, 214, 214);
+
+  width: 100%;
+  max-width: 900px;
+  height: max-content;
+  margin: 26px auto;
+  padding-bottom: 50px;
+}
