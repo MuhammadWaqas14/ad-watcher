@@ -8,7 +8,7 @@ function CreatePost(props) {
   const [posts, setPost] = useState({
     title: "",
     body: "",
-    filepath: "/uploads",
+    filepath: "",
     credits: "",
   });
   const { title, body, filepath, credits } = posts;
@@ -86,7 +86,7 @@ function CreatePost(props) {
                 style={{ background: "white" }}
                 type="file"
                 className="mt-4 mb-3"
-                accept=".png,.jpg,.jpeg,.mp4,.mpeg,.3gp,.mkv"
+                accept="image/*"
                 onChange={(e) => {
                   setFile(e.target.files[0]);
                 }}

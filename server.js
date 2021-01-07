@@ -28,6 +28,10 @@ app.post(
     if (req.files === null) {
       return res.status(400).json({ msg: "No File Uploaded" });
     }
+    temp = file.mimetype.indexOf("image");
+    if (temp === -1) {
+      return res.status(400).json({ msg: "Upload a correct file" });
+    }
     const file = req.files.file;
     var str = file.name;
     var nameF;
