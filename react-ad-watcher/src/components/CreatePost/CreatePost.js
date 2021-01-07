@@ -11,15 +11,14 @@ function CreatePost(props) {
     filepath: "",
     credits: "",
   });
+  const [error, setError] = useState(false);
   const { title, body, filepath, credits } = posts;
-
-  const [file, setFile] = useState("");
 
   const submitHandler = async (e) => {
     e.preventDefault();
     console.log(posts);
     if (title !== "" && body !== "" && filepath !== "" && credits !== "") {
-      Axios.post("/api/posts/create", posts, {
+      await Axios.post("/api/posts/create", posts, {
         headers: {
           Authorization: `${props.authToken}`,
         },
@@ -29,11 +28,29 @@ function CreatePost(props) {
           props.history.push("/");
         })
         .catch((err) => {
+          setError(true);
           props.history.push("/");
           alert("Error Posting Please Try Again Later");
           console.log(err);
         });
+    } else {
+      setError(true);
     }
+  };
+  const uploadImage = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "adwatcher");
+
+    await Axios.post(
+      "https://api.cloudinary.com/v1_1/umarkhawaja/image/upload",
+      data
+    )
+      .then((res) => {
+        setPost({ ...posts, filepath: res.data.secure_url });
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -44,6 +61,14 @@ function CreatePost(props) {
             <h1>
               <span className="font-weight-bold">Create Post</span>
             </h1>
+            {error && (
+              <span
+                className="font-weight-bold mt-6 mb-6"
+                style={{ color: "red" }}
+              >
+                ERROR CHECK Upload Details!
+              </span>
+            )}
             <FormGroup>
               <Label className="mt-3">Title</Label>
               <Input
@@ -87,39 +112,8 @@ function CreatePost(props) {
                 type="file"
                 className="mt-4 mb-3"
                 accept="image/*"
-                onChange={(e) => {
-                  setFile(e.target.files[0]);
-                }}
+                onChange={uploadImage}
               ></Input>
-              <Button
-                className="mt-4 mb-3"
-                style={{ maxWidth: "200px", margin: "7px" }}
-                onClick={async (e) => {
-                  e.preventDefault();
-                  const formData = new FormData();
-                  formData.append("file", file);
-
-                  try {
-                    const res = await Axios.post("/upload", formData, {
-                      headers: {
-                        Authorization: `${props.authToken}`,
-                        "Content-Type": "multipart/form-data",
-                      },
-                    });
-                    console.log(res.data);
-                    setPost({
-                      ...posts,
-                      filepath: res.data.filePath,
-                    });
-                    alert("FILE UPLOADED Succesfully");
-                  } catch (err) {
-                    console.log(err);
-                  }
-                }}
-              >
-                UPLOAD
-              </Button>
-
               <Button className="mt-4 mb-3" type="submit">
                 CREATE
               </Button>

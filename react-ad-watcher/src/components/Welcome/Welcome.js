@@ -14,9 +14,8 @@ import { withRouter } from "react-router-dom";
 
 function Welcome(props) {
   const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    Axios.get("/api/posts/all", {
+  const fetchData = async () => {
+    await Axios.get("/api/posts/all", {
       headers: {
         Authorization: `${props.authToken}`,
         "Content-Type": "application/x-www-form-urlencoded",
@@ -28,10 +27,12 @@ function Welcome(props) {
       .catch((err) => {
         console.log(err);
         props.history.push("/login");
-        alert("something went wrong please log in");
-        props.history.push("/login");
+        alert("something went wrong please login again");
       });
-  }, [props, posts]);
+  };
+  useEffect(() => {
+    fetchData();
+  });
   return (
     <div className="posts-home">
       <Button
