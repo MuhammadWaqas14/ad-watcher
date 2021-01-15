@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 require("dotenv").config();
 const bodyParser = require("body-parser");
 const connectDB = require("./config/db");
@@ -20,6 +21,17 @@ require("./middleware/passport")(passport);
 
 app.use("/api/posts/", require("./routes/api/posts"));
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("react-ad-watcher/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(
+      path.resolve(__dirname, "react-ad-watcher", "build", "index.html")
+    );
+  });
+}
+
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`Server Started on port ${port}`));
+app.listen(port, () =>
+  console.log(`Server Started on port ${port} in ${process.env.NODE_ENV} mode`)
+);

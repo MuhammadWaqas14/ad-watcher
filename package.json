@@ -4,10 +4,11 @@
   "description": "Boilerplate for React and express",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "server": "nodemon server.js",
+    "start": "cross-env NODE_ENV=production node server.js",
+    "server": "cross-env NODE_ENV=development nodemon server.js",
     "react-ad-watcher": "cd react-ad-watcher && npm start",
-    "dev": "concurrently \"npm run server\" \"npm run react-ad-watcher\""
+    "dev": "concurrently \"npm run server\" \"npm run react-ad-watcher\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix react-ad-watcher && npm run build -- react-ad-watcher"
   },
   "author": "Umar Farooq",
   "license": "ISC",
@@ -30,6 +31,7 @@
     "validator": "^13.5.2"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "gh-pages": "^3.1.0",
     "nodemon": "^2.0.6"
   }
