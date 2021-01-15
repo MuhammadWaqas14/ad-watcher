@@ -1,5 +1,5 @@
 import Axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Button } from "reactstrap";
 import {
   Card,
@@ -14,7 +14,24 @@ import { withRouter } from "react-router-dom";
 
 function Welcome(props) {
   const [posts, setPosts] = useState([]);
-  const fetchData = async () => {
+  const [user, setUser] = useState([]);
+
+  const fetchUser = useCallback(async () => {
+    await Axios.get("/api/posts/user", {
+      headers: {
+        Authorization: `${props.authToken}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        // props.history.push("/login");
+      });
+  }, [props.authToken]);
+  const fetchData = useCallback(async () => {
     await Axios.get("/api/posts/all", {
       headers: {
         Authorization: `${props.authToken}`,
@@ -27,12 +44,29 @@ function Welcome(props) {
       .catch((err) => {
         console.log(err);
         props.history.push("/login");
-        alert("something went wrong please login again");
       });
-  };
+  }, [props.authToken, props.history]);
+
   useEffect(() => {
     fetchData();
-  });
+    fetchUser();
+  }, [fetchData, fetchUser]);
+
+  const deletePost = async (post) => {
+    await Axios.delete(`/api/posts/delete/${post._id}`, {
+      headers: {
+        Authorization: `${props.authToken}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+      .then((res) => {
+        alert("post deleted");
+        window.location.reload(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="posts-home">
       <Button
@@ -74,6 +108,16 @@ function Welcome(props) {
                 >
                   <CardBody>
                     <CardTitle tag="h4">{post.author}</CardTitle>
+                    {post.author === user.user_name && (
+                      <button
+                        className="btn-dark"
+                        onClick={() => {
+                          deletePost(post);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    )}
                     <CardSubtitle
                       tag="h6"
                       className="mt-2 mb-2 "

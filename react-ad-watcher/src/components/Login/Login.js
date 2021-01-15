@@ -15,13 +15,13 @@ function Login(props) {
     password: "",
   });
   useEffect(() => {}, [props, error]);
-  const loginHandler = (e) => {
+  const loginHandler = async (e) => {
     e.preventDefault();
     if (userDetails.email !== "" && userDetails.password !== "") {
-      Axios.post("/api/users/login", userDetails)
+      await Axios.post("/api/users/login", userDetails)
         .then((res) => {
           props.setAuth(res.data.token);
-          console.log(res);
+
           setError(false);
           props.setLoggedIn(true);
           props.setSignUpCall(false);

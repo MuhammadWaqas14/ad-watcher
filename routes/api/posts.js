@@ -15,16 +15,20 @@ router.get(
       );
   }
 );
-
+router.get(
+  "/user",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.status(200).json(req.user);
+  }
+);
 router.get(
   "/all",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Post.find({})
       .then((posts) => res.status(200).json(posts))
-      .catch((err) =>
-        res.status(400).json({ user: "Error fetching posts of logged in user" })
-      );
+      .catch((err) => res.status(400).json({ user: "Error fetching posts" }));
   }
 );
 

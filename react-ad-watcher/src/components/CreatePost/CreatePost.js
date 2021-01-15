@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import Progress from "./Progress";
 import Axios from "axios";
 import "./CreatePost.css";
 import { withRouter } from "react-router-dom";
@@ -13,6 +14,7 @@ function CreatePost(props) {
   });
   const [error, setError] = useState(false);
   const { title, body, filepath, credits } = posts;
+  const [uploadPercentage, setUploadPercentage] = useState(0);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -45,14 +47,26 @@ function CreatePost(props) {
 
     await Axios.post(
       "https://api.cloudinary.com/v1_1/umarkhawaja/image/upload",
-      data
+      data,
+      {
+        onUploadProgress: (progressEvent) => {
+          setUploadPercentage(
+            parseInt(
+              Math.round((progressEvent.loaded * 100) / progressEvent.total)
+            )
+          );
+        },
+      }
     )
       .then((res) => {
         setPost({ ...posts, filepath: res.data.secure_url });
       })
       .catch((err) => console.log(err));
   };
-
+  const backHandler = (e) => {
+    e.preventDefault();
+    props.history.push("/");
+  };
   return (
     <>
       <div className="card border-0 shadow p-10 cd-bg">
@@ -97,10 +111,9 @@ function CreatePost(props) {
             <FormGroup>
               <Label className="mt-3">Set Credits</Label>
               <Input
-                type="numer"
+                type="number"
                 value={credits}
-                placeholder="minimum 50"
-                min="50"
+                placeholder="Enter Credits to be divided"
                 onChange={(e) => {
                   setPost({ ...posts, credits: e.target.value });
                 }}
@@ -114,8 +127,16 @@ function CreatePost(props) {
                 accept="image/*"
                 onChange={uploadImage}
               ></Input>
+              <Progress percentage={uploadPercentage}></Progress>
               <Button className="mt-4 mb-3" type="submit">
                 CREATE
+              </Button>
+              <Button
+                className="mt-4 mb-3 ml-4"
+                type="back"
+                onClick={backHandler}
+              >
+                Back
               </Button>
             </FormGroup>
           </Form>
