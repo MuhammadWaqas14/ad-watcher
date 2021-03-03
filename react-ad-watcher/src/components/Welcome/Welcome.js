@@ -1,3 +1,5 @@
+import "../../../node_modules/video-react/dist/video-react.css";
+import { Player } from "video-react";
 import Axios from "axios";
 import React, { useState, useEffect, useCallback } from "react";
 import { Button } from "reactstrap";
@@ -128,18 +130,22 @@ function Welcome(props) {
 
                     <CardText>{post.body}</CardText>
                   </CardBody>
-                  <CardImg
-                    className="image-fluid"
-                    style={{
-                      maxHeight: "800px",
-                    }}
-                    width="auto"
-                    height="100%"
-                    src={post.filepath}
-                    alt="productimagehere"
-                  />
-
-                  <Button className="btn-block btn-dark">Watch Ad</Button>
+                  {post.filepath.indexOf("video") >= 0 ? (
+                    <Player playsInLine src={post.filepath} />
+                  ) : (
+                    <CardImg
+                      className="image-fluid"
+                      style={{
+                        maxHeight: "800px",
+                      }}
+                      width="auto"
+                      height="100%"
+                      src={post.filepath}
+                      alt="productimagehere"
+                    />
+                  )}
+                  {/* 
+                  <Button className="btn-block btn-dark">Watch Ad</Button> */}
                 </Card>
               </div>
             </li>
@@ -153,7 +159,7 @@ function Welcome(props) {
           }}
         >
           <CardBody>
-            <CardTitle tag="h4">NO POSTS TO DISPLAY</CardTitle>
+            <CardTitle tag="h4">Fetching Posts</CardTitle>
             <CardSubtitle
               tag="h6"
               className="mt-2 mb-2 "

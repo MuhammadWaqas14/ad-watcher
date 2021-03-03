@@ -42,11 +42,12 @@ function CreatePost(props) {
   const uploadImage = async (e) => {
     const files = e.target.files;
     const data = new FormData();
+    console.log(files[0]);
     data.append("file", files[0]);
     data.append("upload_preset", "adwatcher");
 
     await Axios.post(
-      "https://api.cloudinary.com/v1_1/umarkhawaja/image/upload",
+      "https://api.cloudinary.com/v1_1/umarkhawaja/auto/upload",
       data,
       {
         onUploadProgress: (progressEvent) => {
@@ -124,7 +125,7 @@ function CreatePost(props) {
                 style={{ background: "white" }}
                 type="file"
                 className="mt-4 mb-3"
-                accept="image/*"
+                accept="image/* , video/*"
                 onChange={uploadImage}
               ></Input>
               <Progress percentage={uploadPercentage}></Progress>
