@@ -17,6 +17,7 @@ import { withRouter } from "react-router-dom";
 function Welcome(props) {
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState([]);
+  const [wallet, setWallet] = useState();
 
   const fetchUser = useCallback(async () => {
     await Axios.get("/api/posts/user", {
@@ -30,7 +31,6 @@ function Welcome(props) {
       })
       .catch((err) => {
         console.log(err);
-        // props.history.push("/login");
       });
   }, [props.authToken]);
   const fetchData = useCallback(async () => {
@@ -48,11 +48,26 @@ function Welcome(props) {
         props.history.push("/login");
       });
   }, [props.authToken, props.history]);
+  const fetchWallet = useCallback(async () => {
+    await Axios.get("/api/wallets", {
+      headers: {
+        Authorization: `${props.authToken}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+      .then((res) => {
+        setWallet(res.data[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [props.authToken]);
 
   useEffect(() => {
     fetchData();
     fetchUser();
-  }, [fetchData, fetchUser]);
+    fetchWallet();
+  }, [fetchData, fetchUser, fetchWallet]);
 
   const deletePost = async (post) => {
     await Axios.delete(`/api/posts/delete/${post._id}`, {
@@ -71,6 +86,18 @@ function Welcome(props) {
   };
   return (
     <div className="posts-home">
+      {wallet ? (
+        <Button
+          style={{ maxWidth: "200px", margin: "7px" }}
+          className="btn-dark"
+          onClick={() => {}}
+        >
+          Credits: {wallet.credits}
+        </Button>
+      ) : (
+        <></>
+      )}
+
       <Button
         style={{ maxWidth: "200px", margin: "7px" }}
         className="btn-dark"

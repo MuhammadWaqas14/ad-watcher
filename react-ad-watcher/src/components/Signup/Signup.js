@@ -14,6 +14,13 @@ function Signup(props) {
     phone: "",
     password: "",
   });
+  const [walletDetails, setWalletDetails] = useState({
+    credits: "0",
+    phone: "",
+    type: "Standard: JC,EP,Bank",
+    total_trans: "0",
+    user_id: "",
+  });
 
   const [passwordChk, setPasswordChk] = useState("");
   const [isError, setIsError] = useState(false);
@@ -41,6 +48,16 @@ function Signup(props) {
               props.setLoggedIn(true);
               props.setSignUpCall(false);
               props.history.push("/");
+
+              Axios.post("/api/wallets/create", walletDetails, {
+                headers: {
+                  Authorization: `${res.data.token}`,
+                },
+              })
+                .then((rsp) => {
+                  console.log(rsp);
+                })
+                .catch((errr) => console.log(errr));
             })
             .catch((err) => {
               console.log(err);
@@ -125,12 +142,16 @@ function Signup(props) {
                 type="text"
                 value={userDetails.user_name}
                 placeholder="User Name"
-                onChange={(e) =>
+                onChange={(e) => {
                   setUserDetails({
                     ...userDetails,
                     user_name: e.target.value,
-                  })
-                }
+                  });
+                  setWalletDetails({
+                    ...walletDetails,
+                    user_id: e.target.value,
+                  });
+                }}
               ></Input>
             </FormGroup>
             <FormGroup>
@@ -155,12 +176,16 @@ function Signup(props) {
                 type="text"
                 value={userDetails.phone}
                 placeholder="Phone"
-                onChange={(e) =>
+                onChange={(e) => {
                   setUserDetails({
                     ...userDetails,
                     phone: e.target.value,
-                  })
-                }
+                  });
+                  setWalletDetails({
+                    ...walletDetails,
+                    phone: e.target.value,
+                  });
+                }}
               ></Input>
             </FormGroup>
             <FormGroup>
