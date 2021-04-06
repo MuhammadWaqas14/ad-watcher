@@ -1,5 +1,5 @@
 import "../../../node_modules/video-react/dist/video-react.css";
-import { Player } from "video-react";
+import { Player, Shortcut, ControlBar, BigPlayButton } from "video-react";
 import Axios from "axios";
 import React, { useState, useEffect, useCallback } from "react";
 import { Button } from "reactstrap";
@@ -64,6 +64,7 @@ function Welcome(props) {
   }, [props.authToken]);
 
   useEffect(() => {
+    document.addEventListener("contextmenu", (e) => e.preventDefault());
     fetchData();
     fetchUser();
     fetchWallet();
@@ -158,7 +159,21 @@ function Welcome(props) {
                     <CardText>{post.body}</CardText>
                   </CardBody>
                   {post.filepath.indexOf("video") >= 0 ? (
-                    <Player playsInLine src={post.filepath} />
+                    <>
+                      <Player
+                        id="video-player"
+                        playsInLine
+                        src={post.filepath}
+                        onContextMenu={(e) => e.preventDefault()}
+                      >
+                        <BigPlayButton position="center" />
+                        <ControlBar
+                          disableDefaultControls={true}
+                          disableCompletely={true}
+                        />
+                        <Shortcut clickable={false} dblclickable={false} />
+                      </Player>
+                    </>
                   ) : (
                     <CardImg
                       className="image-fluid"
