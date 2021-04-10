@@ -4,6 +4,7 @@ import "./App.css";
 import Signup from "./components/Signup/Signup";
 import Welcome from "./components/Welcome/Welcome";
 import CreatePost from "./components/CreatePost/CreatePost";
+import UpdatePost from "./components/UpdatePost/UpdatePost";
 import useLocalStorage from "./hooks/useLocalStorage";
 
 import {
@@ -78,6 +79,9 @@ function App() {
         </Route>
         <Route path="/create-post" exact>
           <CreatePost authToken={authToken} setAuth={setAuth} />
+        </Route>
+        <Route path="/update-post/:id" exact>
+          <UpdatePost authToken={authToken} setAuth={setAuth} />
         </Route>
       </Switch>
     </Router>

@@ -2,7 +2,13 @@ import "../../../node_modules/video-react/dist/video-react.css";
 import { Player, Shortcut, ControlBar, BigPlayButton } from "video-react";
 import Axios from "axios";
 import React, { useState, useEffect, useCallback } from "react";
-import { Button } from "reactstrap";
+import {
+  UncontrolledDropdown,
+  Button,
+  DropdownMenu,
+  DropdownItem,
+  DropdownToggle,
+} from "reactstrap";
 import {
   Card,
   CardImg,
@@ -64,7 +70,6 @@ function Welcome(props) {
   }, [props.authToken]);
 
   useEffect(() => {
-    document.addEventListener("contextmenu", (e) => e.preventDefault());
     fetchData();
     fetchUser();
     fetchWallet();
@@ -131,23 +136,45 @@ function Welcome(props) {
             >
               <div className="container">
                 <Card
+                  contextMenu="none"
+                  onContextMenu={(e) => e.preventDefault()}
                   className="post-card"
                   style={{
                     background: "rgba(180,180,180,0.9",
                   }}
                 >
                   <CardBody>
-                    <CardTitle tag="h4">{post.author}</CardTitle>
-                    {post.author === user.user_name && (
-                      <button
-                        className="btn-dark"
-                        onClick={() => {
-                          deletePost(post);
-                        }}
-                      >
-                        Delete
-                      </button>
-                    )}
+                    <CardTitle tag="h3">
+                      {post.author}
+                      <UncontrolledDropdown className="float-right">
+                        <DropdownToggle caret></DropdownToggle>
+                        <DropdownMenu>
+                          {post.author === user.user_name ? (
+                            <>
+                              <DropdownItem
+                                className="btn btn-secondary"
+                                onClick={() => {
+                                  deletePost(post);
+                                }}
+                              >
+                                Delete
+                              </DropdownItem>
+                              <DropdownItem
+                                className="btn btn-secondary"
+                                onClick={() =>
+                                  props.history.push(`/update-post/${post._id}`)
+                                }
+                              >
+                                Update
+                              </DropdownItem>
+                            </>
+                          ) : (
+                            <DropdownItem>Report</DropdownItem>
+                          )}
+                        </DropdownMenu>
+                      </UncontrolledDropdown>
+                    </CardTitle>
+
                     <CardSubtitle
                       tag="h6"
                       className="mt-2 mb-2 "
@@ -161,7 +188,8 @@ function Welcome(props) {
                   {post.filepath.indexOf("video") >= 0 ? (
                     <>
                       <Player
-                        id="video-player"
+                        contextMenu="none"
+                        id="postContent"
                         playsInLine
                         src={post.filepath}
                         onContextMenu={(e) => e.preventDefault()}
@@ -186,8 +214,6 @@ function Welcome(props) {
                       alt="productimagehere"
                     />
                   )}
-                  {/* 
-                  <Button className="btn-block btn-dark">Watch Ad</Button> */}
                 </Card>
               </div>
             </li>
