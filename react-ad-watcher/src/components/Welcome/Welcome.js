@@ -25,8 +25,31 @@ import { withRouter } from "react-router-dom";
 
 function Welcome(props) {
   const [modal, setModal] = useState(false);
-  const toggle = () => setModal(!modal);
+  const changeButtonState = () => {
+    setTimeout(() => {
+      setModalButtonState(!modalButtonState);
+    }, 30000);
+  };
 
+  const toggle = () => {
+    setModal(!modal);
+    !modalButtonState ? setModalButtonState(true) : changeButtonState();
+  };
+
+  const [modalButtonState, setModalButtonState] = useState(true);
+
+  const externalCloseBtn = (
+    <button
+      className="close"
+      style={{ position: "absolute", top: "15px", right: "15px" }}
+      disabled={modalButtonState}
+      onClick={() => {
+        toggle();
+      }}
+    >
+      &times;
+    </button>
+  );
   const [posts, setPosts] = useState([]);
   const [current, setCurrent] = useState({});
   const [user, setUser] = useState([]);
@@ -144,8 +167,18 @@ function Welcome(props) {
               <div className="container">
                 <div>
                   {modal ? (
-                    <Modal isOpen={modal} toggle={toggle} size="lg">
-                      <ModalHeader toggle={toggle}>{current.title}</ModalHeader>
+                    <Modal
+                      contextMenu="none"
+                      onContextMenu={(e) => e.preventDefault()}
+                      isOpen={modal}
+                      toggle={toggle}
+                      centered="true"
+                      size="lg"
+                      backdrop="static"
+                      keyboard={false}
+                      external={externalCloseBtn}
+                    >
+                      <ModalHeader>{current.title}</ModalHeader>
                       <ModalBody>
                         {current.filepath.indexOf("video") >= 0 ? (
                           <>
@@ -156,7 +189,10 @@ function Welcome(props) {
                               src={current.filepath}
                               onContextMenu={(e) => e.preventDefault()}
                             >
-                              <BigPlayButton position="center" />
+                              <BigPlayButton
+                                position="center"
+                                disabled={true}
+                              />
                               <ControlBar
                                 disableDefaultControls={true}
                                 disableCompletely={true}
