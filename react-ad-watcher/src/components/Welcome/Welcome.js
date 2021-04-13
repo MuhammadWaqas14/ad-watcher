@@ -10,6 +10,9 @@ import {
   DropdownToggle,
 } from "reactstrap";
 import {
+  Modal,
+  ModalHeader,
+  ModalBody,
   Card,
   CardImg,
   CardText,
@@ -21,7 +24,11 @@ import "./Welcome.css";
 import { withRouter } from "react-router-dom";
 
 function Welcome(props) {
+  const [modal, setModal] = useState(false);
+  const toggle = () => setModal(!modal);
+
   const [posts, setPosts] = useState([]);
+  const [current, setCurrent] = useState({});
   const [user, setUser] = useState([]);
   const [wallet, setWallet] = useState();
 
@@ -73,7 +80,7 @@ function Welcome(props) {
     fetchData();
     fetchUser();
     fetchWallet();
-  }, [fetchData, fetchUser, fetchWallet]);
+  }, [fetchData, fetchUser, fetchWallet, posts]);
 
   const deletePost = async (post) => {
     await Axios.delete(`/api/posts/delete/${post._id}`, {
@@ -135,6 +142,49 @@ function Welcome(props) {
               }}
             >
               <div className="container">
+                <div>
+                  {modal ? (
+                    <Modal isOpen={modal} toggle={toggle} size="lg">
+                      <ModalHeader toggle={toggle}>{current.title}</ModalHeader>
+                      <ModalBody>
+                        {current.filepath.indexOf("video") >= 0 ? (
+                          <>
+                            <Player
+                              contextMenu="none"
+                              id="postContent"
+                              playsInLine
+                              src={current.filepath}
+                              onContextMenu={(e) => e.preventDefault()}
+                            >
+                              <BigPlayButton position="center" />
+                              <ControlBar
+                                disableDefaultControls={true}
+                                disableCompletely={true}
+                              />
+                              <Shortcut
+                                clickable={false}
+                                dblclickable={false}
+                              />
+                            </Player>
+                          </>
+                        ) : (
+                          <CardImg
+                            className="image-fluid"
+                            style={{
+                              maxHeight: "800px",
+                            }}
+                            width="auto"
+                            height="100%"
+                            src={current.filepath}
+                            alt="productimagehere"
+                          />
+                        )}
+                      </ModalBody>
+                    </Modal>
+                  ) : (
+                    <></>
+                  )}
+                </div>
                 <Card
                   contextMenu="none"
                   onContextMenu={(e) => e.preventDefault()}
@@ -186,12 +236,20 @@ function Welcome(props) {
                     <CardText>{post.body}</CardText>
                   </CardBody>
                   {post.filepath.indexOf("video") >= 0 ? (
-                    <>
+                    <div
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setCurrent(post);
+                        console.log(current);
+                        toggle();
+                      }}
+                    >
                       <Player
                         contextMenu="none"
                         id="postContent"
                         playsInLine
                         src={post.filepath}
+                        clickable="false"
                         onContextMenu={(e) => e.preventDefault()}
                       >
                         <BigPlayButton position="center" />
@@ -201,18 +259,27 @@ function Welcome(props) {
                         />
                         <Shortcut clickable={false} dblclickable={false} />
                       </Player>
-                    </>
+                    </div>
                   ) : (
-                    <CardImg
-                      className="image-fluid"
-                      style={{
-                        maxHeight: "800px",
+                    <div
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setCurrent(post);
+                        console.log(current);
+                        toggle();
                       }}
-                      width="auto"
-                      height="100%"
-                      src={post.filepath}
-                      alt="productimagehere"
-                    />
+                    >
+                      <CardImg
+                        className="image-fluid"
+                        style={{
+                          maxHeight: "800px",
+                        }}
+                        width="auto"
+                        height="100%"
+                        src={post.filepath}
+                        alt="productimagehere"
+                      />
+                    </div>
                   )}
                 </Card>
               </div>

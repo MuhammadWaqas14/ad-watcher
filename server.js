@@ -21,6 +21,7 @@ require("./middleware/passport")(passport);
 
 app.use("/api/posts/", require("./routes/api/posts"));
 app.use("/api/wallets/", require("./routes/api/wallets"));
+app.use("/api/reports/", require("./routes/api/reports"));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("react-ad-watcher/build"));
