@@ -27,6 +27,24 @@ function Welcome(props) {
   const [modal, setModal] = useState(false);
   const changeButtonState = () => {
     setTimeout(() => {
+      setWallet({
+        ...wallet,
+        credits: (parseInt(wallet.credits) + 5).toString(),
+      });
+      setWallet((wallet) => {
+        Axios.patch(`/api/wallets/update/${wallet._id}`, wallet, {
+          headers: {
+            Authorization: `${props.authToken}`,
+          },
+        })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        return wallet;
+      });
       setModalButtonState(!modalButtonState);
     }, 30000);
   };

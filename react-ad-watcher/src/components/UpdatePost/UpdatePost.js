@@ -42,7 +42,6 @@ function UpdatePost(props) {
         },
       })
         .then((res) => {
-          console.log(res);
           props.history.push("/");
         })
         .catch((err) => {
