@@ -50,6 +50,7 @@ router.post("/login", (req, res) => {
     return res.status(400).json(errors);
   }
   const { email, password } = req.body;
+
   User.findOne({ email }).then((user) => {
     if (!user) {
       return res.status(404).json({ email: "Email not found" });

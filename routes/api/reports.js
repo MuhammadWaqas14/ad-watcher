@@ -19,9 +19,8 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const user_id = req.user.user_name;
-
     const report = req.body;
-    const { errors, isValid } = validateWalletInput(report);
+    const { errors, isValid } = validateReportInput(report);
     if (!isValid) {
       return res.status(400).json(errors);
     }

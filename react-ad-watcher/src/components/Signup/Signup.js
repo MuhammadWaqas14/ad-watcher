@@ -25,6 +25,7 @@ function Signup(props) {
   const [passwordChk, setPasswordChk] = useState("");
   const [isError, setIsError] = useState(false);
   const [fieldEmpty, setFieldEmpty] = useState(false);
+
   const signUpHandler = (e) => {
     e.preventDefault();
     if (userDetails.password !== passwordChk) {

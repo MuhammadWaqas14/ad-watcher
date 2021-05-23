@@ -32,10 +32,15 @@ function CreatePost(props) {
         setNewWallet(res.data[0]);
       })
       .catch((err) => {
-        console.log(err);
+        props.setAuth("");
+        props.histroy.push("/login");
       });
-  }, [props.authToken]);
-
+  }, [props]);
+  useEffect(() => {
+    if (props.authToken === "") {
+      props.history.push("/login");
+    }
+  }, [props]);
   useEffect(() => {
     fetchWallet();
   }, [fetchWallet]);

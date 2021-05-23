@@ -70,10 +70,11 @@ function UpdatePost(props) {
           setPost(res.data[0]);
         })
         .catch((err) => {
-          console.log(err);
+          props.setAuth("");
+          props.histroy.push("/login");
         });
     }
-  }, [posts, postId, props.authToken]);
+  }, [posts, postId, props]);
 
   return (
     <>

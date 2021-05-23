@@ -5,6 +5,12 @@ import Signup from "./components/Signup/Signup";
 import Welcome from "./components/Welcome/Welcome";
 import CreatePost from "./components/CreatePost/CreatePost";
 import UpdatePost from "./components/UpdatePost/UpdatePost";
+import ReportPost from "./components/ReportPost/ReportPost";
+import AdminPanel from "./components/AdminPanel/AdminPanel";
+import NavBar from "./components/NavBar/NavBar";
+import Wallet from "./components/Wallet/Wallet";
+import BuyCredits from "./components/Wallet/BuyCredits";
+import WithdrawCash from "./components/Wallet/WithdrawCash";
 import useLocalStorage from "./hooks/useLocalStorage";
 
 import {
@@ -52,8 +58,6 @@ function App() {
             setAuth={setAuth}
             loggedIn={loggedIn}
             setLoggedIn={setLoggedIn}
-            signUpCall={signUpCall}
-            setSignUpCall={setSignUpCall}
           ></Welcome>
         </Route>
         <Route exact path="/login">
@@ -82,6 +86,24 @@ function App() {
         </Route>
         <Route path="/update-post/:id" exact>
           <UpdatePost authToken={authToken} setAuth={setAuth} />
+        </Route>
+        <Route path="/report-post/:id" exact>
+          <ReportPost authToken={authToken} setAuth={setAuth} />
+        </Route>
+        <Route path="/wallet" exact>
+          <Wallet authToken={authToken} setAuth={setAuth} />
+        </Route>
+
+        <Route path="/wallet/buy-credits" exact>
+          <BuyCredits authToken={authToken} setAuth={setAuth} />
+        </Route>
+
+        <Route path="/wallet/withdraw-cash" exact>
+          <WithdrawCash authToken={authToken} setAuth={setAuth} />
+        </Route>
+        <Route path="/admin-panel" exact>
+          <NavBar />
+          <AdminPanel authToken={authToken} setAuth={setAuth} />
         </Route>
       </Switch>
     </Router>

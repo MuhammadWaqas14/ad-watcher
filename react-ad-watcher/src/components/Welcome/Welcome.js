@@ -84,9 +84,10 @@ function Welcome(props) {
         setUser(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        props.setAuth("");
+        props.history.push("/login");
       });
-  }, [props.authToken]);
+  }, [props]);
   const fetchData = useCallback(async () => {
     await Axios.get("/api/posts/all", {
       headers: {
@@ -98,10 +99,10 @@ function Welcome(props) {
         setPosts(res.data.reverse());
       })
       .catch((err) => {
-        console.log(err);
+        props.setAuth("");
         props.history.push("/login");
       });
-  }, [props.authToken, props.history]);
+  }, [props]);
   const fetchWallet = useCallback(async () => {
     await Axios.get("/api/wallets", {
       headers: {
@@ -113,9 +114,10 @@ function Welcome(props) {
         setWallet(res.data[0]);
       })
       .catch((err) => {
-        console.log(err);
+        props.setAuth("");
+        props.history.push("/login");
       });
-  }, [props.authToken]);
+  }, [props]);
 
   useEffect(() => {
     fetchData();
@@ -138,13 +140,18 @@ function Welcome(props) {
         console.log(err);
       });
   };
+
+  const walletSubmit = () => {
+    props.history.push("/wallet");
+  };
+
   return (
     <div className="posts-home">
       {wallet ? (
         <Button
           style={{ maxWidth: "200px", margin: "7px" }}
           className="btn-dark"
-          onClick={() => {}}
+          onClick={walletSubmit}
         >
           Credits: {wallet.credits}
         </Button>
@@ -204,6 +211,7 @@ function Welcome(props) {
                               contextMenu="none"
                               id="postContent"
                               playsInLine
+                              autoPlay
                               src={current.filepath}
                               onContextMenu={(e) => e.preventDefault()}
                             >
@@ -273,7 +281,14 @@ function Welcome(props) {
                               </DropdownItem>
                             </>
                           ) : (
-                            <DropdownItem>Report</DropdownItem>
+                            <DropdownItem
+                              className="btn btn-secondary"
+                              onClick={() =>
+                                props.history.push(`/report-post/${post._id}`)
+                              }
+                            >
+                              Report
+                            </DropdownItem>
                           )}
                         </DropdownMenu>
                       </UncontrolledDropdown>

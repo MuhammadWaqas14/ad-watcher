@@ -14,18 +14,30 @@ function Login(props) {
     email: "",
     password: "",
   });
-  useEffect(() => {}, [props, error]);
+  useEffect(() => {
+    if (props.authToken !== "") {
+      props.history.push("/home");
+    }
+  }, [props, error]);
   const loginHandler = async (e) => {
     e.preventDefault();
     if (userDetails.email !== "" && userDetails.password !== "") {
       await Axios.post("/api/users/login", userDetails)
         .then((res) => {
-          props.setAuth(res.data.token);
-
-          setError(false);
-          props.setLoggedIn(true);
-          props.setSignUpCall(false);
-          props.history.push("/home");
+          if (userDetails.email !== "admin@adwatcher.com") {
+            props.setAuth(res.data.token);
+            setError(false);
+            props.setLoggedIn(true);
+            props.setSignUpCall(false);
+            props.history.push("/home");
+          } else {
+            console.log(res.data);
+            props.setAuth(res.data.token);
+            setError(false);
+            props.setLoggedIn(true);
+            props.setSignUpCall(false);
+            props.history.push("/admin-panel");
+          }
         })
         .catch((err) => {
           console.log(err);
