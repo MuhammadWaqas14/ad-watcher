@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { Card } from "reactstrap";
 import { withRouter } from "react-router-dom";
 import Axios from "axios";
 import "./Wallet.css";
@@ -25,17 +26,17 @@ function Wallet(props) {
 
   return (
     <div className="">
-      <label className="display-3 ml-5 mt-3">Wallet Details</label>
       {wallet && (
         <>
-          <card
+          <label className="display-3 ml-5 mt-3">Wallet Details</label>
+          <Card
             className="card text-center m-5 bg-dark"
             style={{ color: "white" }}
           >
             <h1 className="display-4 text-center w-100">You Currently have</h1>
             <h1 className="text-center display-1 w-100 ">{wallet.credits}</h1>
             <h1 className="display-4 text-center w-100">Credits </h1>
-          </card>
+          </Card>
           <button
             className="btn btn-info btn-block m-3 m-auto w-25"
             style={{ marginTop: "3" }}

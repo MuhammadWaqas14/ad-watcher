@@ -31,6 +31,7 @@ function ReportPost(props) {
         props.history.push("/login");
       });
   }, [props, user]);
+
   const sendReport = (report) => {
     Axios.post("/api/reports/create", report, {
       headers: {

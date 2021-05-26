@@ -38,6 +38,11 @@ function NavBar() {
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/admin-panel">
+                  Withdraw Requests
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/admin-panel">
                   Users
                 </a>
               </li>

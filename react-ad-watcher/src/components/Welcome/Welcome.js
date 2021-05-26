@@ -172,8 +172,6 @@ function Welcome(props) {
         style={{ maxWidth: "200px", margin: "7px" }}
         className="btn-dark"
         onClick={() => {
-          props.setLoggedIn(false);
-          props.setSignUpCall(false);
           props.setAuth("");
           props.history.push("/login");
         }}
