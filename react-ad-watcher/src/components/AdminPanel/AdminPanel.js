@@ -37,7 +37,6 @@ function AdminPanel(props) {
         setReports(res.data);
       })
       .catch((err) => {
-        console.log(err);
         props.setAuth("");
         props.history.push("/login");
       });
@@ -101,37 +100,42 @@ function AdminPanel(props) {
         Welcome to Admin Panel For Ad Watcher
       </h3>
 
-      <Card className="card col-12 text-center float-none mt-3">
+      <Card className="card col-12 text-center mt-3 mb-3 card-division">
         <label className="card-header">Content Reports</label>
         <div className="card-body h-50 ">
           <Card className="card">
             <ul className="list-unstyled text-left">
               {reports &&
                 reports.map((report) => (
-                  <li key={report.id} className="alert-danger pb-3">
-                    <label className="card-body w-auto h-auto">
+                  <li key={report._id} className="alert-danger pb-3 mt-3 mb-3">
+                    <label className="card-body w-75 h-auto">
                       Reported by {report.user_id} for the reason:{" "}
                       {report.reason}.
                     </label>
-                    <div className="p-2 mt-2 float-right">
-                      <button className="btn btn-info m-2">View Post</button>
-                    </div>
                   </li>
                 ))}
             </ul>
+            <div className="p-2 mt-2 text-center">
+              <a className="link-secondary" href="/admin-panel/content-reports">
+                see more...
+              </a>
+            </div>
           </Card>
         </div>
       </Card>
 
-      <Card className="card col-12 text-center mt-4">
+      <Card className="card col-12 text-center mt-4 card-division ">
         <label className="card-header">Credit Requests</label>
         <div className="card-body h-50 ">
           <Card className="card">
             <ul className="list-unstyled text-left">
               {creditRequests &&
                 creditRequests.map((cRequest) => (
-                  <li key={cRequest.id} className="alert-success pb-3">
-                    <label className="card-body w-auto h-auto">
+                  <li
+                    key={cRequest._id}
+                    className="alert-success pb-3 mt-3 mb-3"
+                  >
+                    <label className="card-body w-75 h-auto">
                       {cRequest.user_id} has requested {cRequest.amount} credits
                       by performing a transaction with ID:{" "}
                       {cRequest.transaction_id}
@@ -143,18 +147,26 @@ function AdminPanel(props) {
                   </li>
                 ))}
             </ul>
+            <div className="p-2 mt-2 text-center">
+              <a className="link-secondary" href="/admin-panel/credit-requests">
+                see more...
+              </a>
+            </div>
           </Card>
         </div>
       </Card>
-      <Card className="card col-12 text-center mt-4">
+      <Card className="card col-12 text-center mt-4 card-division">
         <label className="card-header">Withdraw Requests</label>
         <div className="card-body h-50 ">
           <Card className="card">
             <ul className="list-unstyled text-left">
               {withdrawRequests &&
                 withdrawRequests.map((wRequest) => (
-                  <li key={wRequest.id} className="alert-success pb-3">
-                    <label className="card-body w-auto h-auto">
+                  <li
+                    key={wRequest._id}
+                    className="alert-success pb-3 mt-3 mb-3"
+                  >
+                    <label className="card-body w-75 h-auto">
                       {wRequest.user_id} has requested {wRequest.amount} cash in
                       account {wRequest.account} through
                       EasyPaisa/JazzCash/UPaisa Account.
@@ -166,6 +178,14 @@ function AdminPanel(props) {
                   </li>
                 ))}
             </ul>
+            <div className="p-2 mt-2 text-center">
+              <a
+                className="link-secondary"
+                href="/admin-panel/withdraw-requests"
+              >
+                see more...
+              </a>
+            </div>
           </Card>
         </div>
       </Card>

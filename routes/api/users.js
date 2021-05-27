@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const SECRET = process.env.SECRET;
 const validateSignUpInput = require("../../validation/signup");
 const validateLoginInput = require("../../validation/login");
+const passport = require("passport");
 const User = require("../../models/User");
 
 router.post("/signup", (req, res) => {
@@ -76,4 +77,15 @@ router.post("/login", (req, res) => {
     });
   });
 });
+
+router.get(
+  "/all",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    User.find({})
+      .then((users) => res.status(200).json(users))
+      .catch((err) => res.status(400).json({ user: "Error fetching users" }));
+  }
+);
+
 module.exports = router;

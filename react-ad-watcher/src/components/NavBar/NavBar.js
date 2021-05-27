@@ -1,12 +1,12 @@
 import React from "react";
-//import { Link } from "react-router-dom";
-function NavBar() {
+import { withRouter } from "react-router-dom";
+function NavBar(props) {
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
-          <a className="navbar-brand" href="/">
-            Ad Watcher
+          <a className="navbar-brand" href="/admin-panel">
+            Ad Watcher Admin
           </a>
           <button
             className="navbar-toggler"
@@ -27,35 +27,35 @@ function NavBar() {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/admin-panel">
+                <a className="nav-link" href="/admin-panel/content-reports">
                   Content Reports
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/admin-panel">
+                <a className="nav-link" href="/admin-panel/credit-requests">
                   Credit Requests
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/admin-panel">
+                <a className="nav-link" href="/admin-panel/withdraw-requests">
                   Withdraw Requests
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/admin-panel">
+                <a className="nav-link" href="/admin-panel/users">
                   Users
                 </a>
               </li>
             </ul>
-            <form className="d-flex">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
+            <form
+              className="d-flex"
+              onSubmit={() => {
+                props.setAuth("");
+                props.history.push("/");
+              }}
+            >
               <button className="btn btn-outline-success" type="submit">
-                Search
+                Log Out
               </button>
             </form>
           </div>
@@ -69,4 +69,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default withRouter(NavBar);

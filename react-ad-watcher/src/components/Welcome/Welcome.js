@@ -25,6 +25,7 @@ import { withRouter } from "react-router-dom";
 
 function Welcome(props) {
   const [modal, setModal] = useState(false);
+
   const changeButtonState = () => {
     setTimeout(() => {
       setWallet({
@@ -133,7 +134,6 @@ function Welcome(props) {
       },
     })
       .then((res) => {
-        alert("post deleted");
         window.location.reload(false);
       })
       .catch((err) => {

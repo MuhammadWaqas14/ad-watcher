@@ -94,8 +94,7 @@ router.delete(
   "/delete/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const author = req.user.user_name;
-    Post.findOneAndDelete({ author, _id: req.params.id })
+    Post.findOneAndDelete({ _id: req.params.id })
       .then((doc) => res.status(200).json(doc))
       .catch((err) =>
         res.status(400).json({ delete: "Error deleting a post" })

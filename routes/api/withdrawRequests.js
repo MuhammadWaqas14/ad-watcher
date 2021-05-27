@@ -38,4 +38,16 @@ router.post(
   }
 );
 
+router.delete(
+  "/delete/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    WithdrawRequests.findOneAndDelete({ _id: req.params.id })
+      .then((doc) => res.status(200).json(doc))
+      .catch((err) =>
+        res.status(400).json({ delete: "Error deleting report" })
+      );
+  }
+);
+
 module.exports = router;

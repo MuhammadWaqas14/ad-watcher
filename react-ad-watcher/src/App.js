@@ -11,6 +11,10 @@ import NavBar from "./components/NavBar/NavBar";
 import Wallet from "./components/Wallet/Wallet";
 import BuyCredits from "./components/Wallet/BuyCredits";
 import WithdrawCash from "./components/Wallet/WithdrawCash";
+import WithdrawRequests from "./components/AdminPanel/WithdrawRequests";
+import CreditRequests from "./components/AdminPanel/CreditRequests";
+import ContentReports from "./components/AdminPanel/ContentReports";
+import Users from "./components/AdminPanel/Users";
 import useLocalStorage from "./hooks/useLocalStorage";
 
 import {
@@ -102,8 +106,24 @@ function App() {
           <WithdrawCash authToken={authToken} setAuth={setAuth} />
         </Route>
         <Route path="/admin-panel" exact>
-          <NavBar />
+          <NavBar authToken={authToken} setAuth={setAuth} />
           <AdminPanel authToken={authToken} setAuth={setAuth} />
+        </Route>
+        <Route path="/admin-panel/withdraw-requests" exact>
+          <NavBar authToken={authToken} setAuth={setAuth} />
+          <WithdrawRequests authToken={authToken} setAuth={setAuth} />
+        </Route>
+        <Route path="/admin-panel/credit-requests" exact>
+          <NavBar authToken={authToken} setAuth={setAuth} />
+          <CreditRequests authToken={authToken} setAuth={setAuth} />
+        </Route>
+        <Route path="/admin-panel/content-reports" exact>
+          <NavBar authToken={authToken} setAuth={setAuth} />
+          <ContentReports authToken={authToken} setAuth={setAuth} />
+        </Route>
+        <Route path="/admin-panel/users" exact>
+          <NavBar authToken={authToken} setAuth={setAuth} />
+          <Users authToken={authToken} setAuth={setAuth} />
         </Route>
       </Switch>
     </Router>
