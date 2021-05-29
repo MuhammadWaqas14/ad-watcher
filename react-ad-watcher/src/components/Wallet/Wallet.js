@@ -28,7 +28,7 @@ function Wallet(props) {
     <div className="">
       {wallet && (
         <>
-          <label className="display-3 ml-5 mt-3">Wallet Details</label>
+          <label className="display-3 ml-5 mt-5">Wallet Details</label>
           <Card
             className="card text-center m-5 bg-dark"
             style={{ color: "white" }}

@@ -12,6 +12,7 @@ const userModel = {
   },
   user_name: {
     type: String,
+    unique: true,
     required: true,
   },
   email: {
@@ -26,6 +27,11 @@ const userModel = {
     type: String,
     required: true,
   },
+  // verified: {
+  //   type: String,
+  //   default: "0",
+  //   required: true,
+  // },
 };
 
 const UserSchema = new Schema(userModel);

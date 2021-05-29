@@ -15,6 +15,10 @@ import WithdrawRequests from "./components/AdminPanel/WithdrawRequests";
 import CreditRequests from "./components/AdminPanel/CreditRequests";
 import ContentReports from "./components/AdminPanel/ContentReports";
 import Users from "./components/AdminPanel/Users";
+import NavBarUser from "./components/NavBarUser/NavBar";
+import EmailConfirmed from "./components/Signup/EmailConfirmed";
+import ConfirmEmail from "./components/Signup/ConfirmEmail";
+
 import useLocalStorage from "./hooks/useLocalStorage";
 
 import {
@@ -46,6 +50,7 @@ function App() {
     <Router>
       <Switch>
         <Route path="/" exact>
+          <NavBarUser authToken={authToken} setAuth={setAuth} />
           <Welcome
             authToken={authToken}
             setAuth={setAuth}
@@ -57,6 +62,8 @@ function App() {
         </Route>
 
         <Route path="/home" exact>
+          <NavBarUser authToken={authToken} setAuth={setAuth} />
+
           <Welcome
             authToken={authToken}
             setAuth={setAuth}
@@ -85,7 +92,16 @@ function App() {
             setSignUpCall={setSignUpCall}
           />
         </Route>
+
+        <Route path="/users/activate/user/:id" exact>
+          <EmailConfirmed authToken={authToken} setAuth={setAuth} />
+        </Route>
+        <Route path="/confirm-email" exact>
+          <ConfirmEmail authToken={authToken} setAuth={setAuth} />
+        </Route>
         <Route path="/create-post" exact>
+          <NavBarUser authToken={authToken} setAuth={setAuth} />
+
           <CreatePost authToken={authToken} setAuth={setAuth} />
         </Route>
         <Route path="/update-post/:id" exact>
@@ -95,14 +111,17 @@ function App() {
           <ReportPost authToken={authToken} setAuth={setAuth} />
         </Route>
         <Route path="/wallet" exact>
+          <NavBarUser authToken={authToken} setAuth={setAuth} />
           <Wallet authToken={authToken} setAuth={setAuth} />
         </Route>
 
         <Route path="/wallet/buy-credits" exact>
+          <NavBarUser authToken={authToken} setAuth={setAuth} />
           <BuyCredits authToken={authToken} setAuth={setAuth} />
         </Route>
 
         <Route path="/wallet/withdraw-cash" exact>
+          <NavBarUser authToken={authToken} setAuth={setAuth} />
           <WithdrawCash authToken={authToken} setAuth={setAuth} />
         </Route>
         <Route path="/admin-panel" exact>

@@ -2,13 +2,7 @@ import "../../../node_modules/video-react/dist/video-react.css";
 import { Player, Shortcut, ControlBar, BigPlayButton } from "video-react";
 import Axios from "axios";
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  UncontrolledDropdown,
-  Button,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
-} from "reactstrap";
+import { Button, DropdownMenu, DropdownItem } from "reactstrap";
 import {
   Modal,
   ModalHeader,
@@ -38,12 +32,8 @@ function Welcome(props) {
             Authorization: `${props.authToken}`,
           },
         })
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+          .then((res) => {})
+          .catch((err) => {});
         return wallet;
       });
       setModalButtonState(!modalButtonState);
@@ -136,9 +126,7 @@ function Welcome(props) {
       .then((res) => {
         window.location.reload(false);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const walletSubmit = () => {
@@ -248,21 +236,23 @@ function Welcome(props) {
                 <Card
                   contextMenu="none"
                   onContextMenu={(e) => e.preventDefault()}
-                  className="post-card"
-                  style={{
-                    background: "rgba(180,180,180,0.9",
-                  }}
+                  className="card m-4 bg-light"
                 >
-                  <CardBody>
-                    <CardTitle tag="h3">
+                  <CardBody className="card-body">
+                    <CardTitle className="" tag="h3">
                       {post.author}
-                      <UncontrolledDropdown className="float-right">
-                        <DropdownToggle caret></DropdownToggle>
-                        <DropdownMenu>
+                      <div className="float-right">
+                        <button
+                          className="dropdown-toggle btn btn-outline-info btn-sm"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        ></button>
+                        <DropdownMenu className="dropdown-menu">
                           {post.author === user.user_name ? (
                             <>
                               <DropdownItem
-                                className="btn btn-secondary"
+                                className="btn btn-secondary dropdown-item"
                                 onClick={() => {
                                   deletePost(post);
                                 }}
@@ -270,7 +260,7 @@ function Welcome(props) {
                                 Delete
                               </DropdownItem>
                               <DropdownItem
-                                className="btn btn-secondary"
+                                className="btn btn-secondary dropdown-item"
                                 onClick={() =>
                                   props.history.push(`/update-post/${post._id}`)
                                 }
@@ -280,7 +270,7 @@ function Welcome(props) {
                             </>
                           ) : (
                             <DropdownItem
-                              className="btn btn-secondary"
+                              className="btn btn-secondary dropdown-item"
                               onClick={() =>
                                 props.history.push(`/report-post/${post._id}`)
                               }
@@ -289,7 +279,7 @@ function Welcome(props) {
                             </DropdownItem>
                           )}
                         </DropdownMenu>
-                      </UncontrolledDropdown>
+                      </div>
                     </CardTitle>
 
                     <CardSubtitle

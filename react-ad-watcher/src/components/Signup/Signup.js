@@ -42,13 +42,11 @@ function Signup(props) {
     ) {
       Axios.post("/api/users/signup", userDetails)
         .then((res) => {
-          console.log(res);
           Axios.post("/api/users/login", userDetails)
             .then((res) => {
               props.setAuth(res.data.token);
               props.setLoggedIn(true);
               props.setSignUpCall(false);
-              props.history.push("/");
 
               Axios.post("/api/wallets/create", walletDetails, {
                 headers: {
@@ -56,16 +54,13 @@ function Signup(props) {
                 },
               })
                 .then((rsp) => {
-                  console.log(rsp);
+                  props.history.push("/confirm-email");
                 })
                 .catch((errr) => console.log(errr));
             })
-            .catch((err) => {
-              console.log(err);
-            });
+            .catch((err) => {});
         })
         .catch((err) => {
-          console.log(err);
           console.log(userDetails);
         });
     } else {

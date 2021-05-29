@@ -2,10 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./login.css";
 import Axios from "axios";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-import {
-  FacebookLoginButton,
-  GoogleLoginButton,
-} from "react-social-login-buttons";
 import { withRouter } from "react-router-dom";
 
 function Login(props) {
@@ -61,12 +57,10 @@ function Login(props) {
         height: "100%",
       }}
     >
-      <div className="card border-0 p-5 shadow cd-bg">
-        <div className="card-body p-5 cd-body">
+      <h1 className="display-4 text-center m-5">ADWATCHER</h1>
+      <div className="card border-0 ">
+        <div className="card-body m-5 cd-body">
           <Form className="login-form p-3" onSubmit={loginHandler}>
-            <h1>
-              <span className="">ADWATCHER</span>
-            </h1>
             {error && (
               <span
                 className="font-weight-bold mt-6 mb-6"
@@ -110,11 +104,6 @@ function Login(props) {
             >
               Sign Up
             </Button>
-            <div className="text-center pt-3">
-              or continue with social media accounts?
-            </div>
-            <FacebookLoginButton className="btn-md btn-block mt-3 mb-3"></FacebookLoginButton>
-            <GoogleLoginButton className="mt-3 mb-3" />
             <div className="text-center">
               <a href="/#">Forgot password?</a>
             </div>
