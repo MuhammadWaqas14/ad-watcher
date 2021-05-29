@@ -60,9 +60,7 @@ function Signup(props) {
             })
             .catch((err) => {});
         })
-        .catch((err) => {
-          console.log(userDetails);
-        });
+        .catch((err) => {});
     } else {
       setFieldEmpty(true);
     }
