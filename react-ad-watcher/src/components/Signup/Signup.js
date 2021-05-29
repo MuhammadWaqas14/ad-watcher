@@ -4,6 +4,7 @@ import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import Axios from "axios";
 import "./signup.css";
 import { withRouter } from "react-router-dom";
+import Logo from "../AdwatcherLogo.png";
 
 function Signup(props) {
   const [userDetails, setUserDetails] = useState({
@@ -72,158 +73,174 @@ function Signup(props) {
     props.history.push("/login");
   };
   return (
-    <>
-      <div className="card border-0 shadow p-10 cd-bg">
-        <div className="card-body p-10 cd-body">
-          <Form className="signup-form p-3">
-            <h1>
-              <span className="font-weight-bold ">SIGN UP</span>
-            </h1>
-            {isError && (
-              <div>
-                <span
-                  className="font-weight-bold mt-6 mb-6"
-                  style={{ color: "red" }}
-                >
-                  Passwords do not match
-                </span>
-              </div>
-            )}
-            {fieldEmpty && (
-              <div>
-                <span
-                  className="font-weight-bold mt-6 mb-6"
-                  style={{ color: "red" }}
-                >
-                  Check Credentials
-                </span>
-              </div>
-            )}
-            <FormGroup>
-              <Label>First Name</Label>
-              <Input
-                className="form-control"
-                type="text"
-                value={userDetails.first_name}
-                placeholder="First Name"
-                onChange={(e) =>
-                  setUserDetails({
-                    ...userDetails,
-                    first_name: e.target.value,
-                  })
-                }
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label>Last Name</Label>
-              <Input
-                className="form-control"
-                type="text"
-                value={userDetails.last_name}
-                placeholder="Last Name"
-                onChange={(e) =>
-                  setUserDetails({
-                    ...userDetails,
-                    last_name: e.target.value,
-                  })
-                }
-              ></Input>
-            </FormGroup>
-            <FormGroup>
-              <Label>User Name</Label>
-              <Input
-                className="form-control"
-                type="text"
-                value={userDetails.user_name}
-                placeholder="User Name"
-                onChange={(e) => {
-                  setUserDetails({
-                    ...userDetails,
-                    user_name: e.target.value,
-                  });
-                  setWalletDetails({
-                    ...walletDetails,
-                    user_id: e.target.value,
-                  });
-                }}
-              ></Input>
-            </FormGroup>
-            <FormGroup>
-              <Label>Email</Label>
-              <Input
-                className="form-control"
-                type="email"
-                value={userDetails.email}
-                placeholder="Email"
-                onChange={(e) =>
-                  setUserDetails({
-                    ...userDetails,
-                    email: e.target.value,
-                  })
-                }
-              ></Input>
-            </FormGroup>
-            <FormGroup>
-              <Label>Phone</Label>
-              <Input
-                className="form-control"
-                type="text"
-                value={userDetails.phone}
-                placeholder="Phone"
-                onChange={(e) => {
-                  setUserDetails({
-                    ...userDetails,
-                    phone: e.target.value,
-                  });
-                  setWalletDetails({
-                    ...walletDetails,
-                    phone: e.target.value,
-                  });
-                }}
-              ></Input>
-            </FormGroup>
-            <FormGroup>
-              <Label>Password</Label>
-              <Input
-                type="password"
-                placeholder="Password"
-                value={userDetails.password}
-                onChange={(e) =>
-                  setUserDetails({
-                    ...userDetails,
-                    password: e.target.value,
-                  })
-                }
-              ></Input>
-            </FormGroup>
-            <FormGroup>
-              <Label>Confirm Password</Label>
-              <Input
-                type="password"
-                placeholder="Confirm Password"
-                value={passwordChk}
-                onChange={(e) => setPasswordChk(e.target.value)}
-              ></Input>
-            </FormGroup>
+    <div className="container p-5 mt-5">
+      <h1 className="display-3 card-header text-center mt-5 text-light bg-info">
+        AdWatcher
+      </h1>
+      <div className="card ">
+        <div className="navbar-link image-logo">
+          <img src={Logo} width="50%" height="50%" alt="Ad Watcher"></img>
+        </div>
+        <div className="card ml-auto  float-right">
+          <h3 className="card-title mt-3 mb-n3 text-center">Sign Up</h3>
+          <div className="card-body m-5 ">
+            <Form className="mt-n5 mb-n5 p-3">
+              {isError && (
+                <>
+                  <label className="alert-danger ml-n5">
+                    Passwords do not match
+                  </label>
+                </>
+              )}
+              {fieldEmpty && (
+                <>
+                  <label className="alert-danger ml-n5">
+                    Check Details, try again.
+                  </label>
+                </>
+              )}
+              <FormGroup>
+                <Label className="label-default position-absolute ml-n5 mt-2">
+                  First Name:
+                </Label>
+                <Input
+                  className="form-control ml-5"
+                  type="text"
+                  value={userDetails.first_name}
+                  placeholder="First Name"
+                  onChange={(e) =>
+                    setUserDetails({
+                      ...userDetails,
+                      first_name: e.target.value,
+                    })
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label className="label-default position-absolute ml-n5 mt-2">
+                  Last Name:
+                </Label>
+                <Input
+                  className="form-control ml-5"
+                  type="text"
+                  value={userDetails.last_name}
+                  placeholder="Last Name"
+                  onChange={(e) =>
+                    setUserDetails({
+                      ...userDetails,
+                      last_name: e.target.value,
+                    })
+                  }
+                ></Input>
+              </FormGroup>
+              <FormGroup>
+                <Label className="label-default position-absolute ml-n5 mt-2">
+                  Username:
+                </Label>
+                <Input
+                  className="form-control ml-5"
+                  type="text"
+                  value={userDetails.user_name}
+                  placeholder="User Name"
+                  onChange={(e) => {
+                    setUserDetails({
+                      ...userDetails,
+                      user_name: e.target.value,
+                    });
+                    setWalletDetails({
+                      ...walletDetails,
+                      user_id: e.target.value,
+                    });
+                  }}
+                ></Input>
+              </FormGroup>
+              <FormGroup>
+                <Label className="label-default position-absolute ml-n5 mt-2">
+                  Email:
+                </Label>
+                <Input
+                  className="form-control ml-5"
+                  type="email"
+                  value={userDetails.email}
+                  placeholder="Email"
+                  onChange={(e) =>
+                    setUserDetails({
+                      ...userDetails,
+                      email: e.target.value,
+                    })
+                  }
+                ></Input>
+              </FormGroup>
+              <FormGroup>
+                <Label className="label-default position-absolute ml-n5 mt-2">
+                  Phone:
+                </Label>
+                <Input
+                  className="form-control ml-5"
+                  type="text"
+                  value={userDetails.phone}
+                  placeholder="Phone"
+                  onChange={(e) => {
+                    setUserDetails({
+                      ...userDetails,
+                      phone: e.target.value,
+                    });
+                    setWalletDetails({
+                      ...walletDetails,
+                      phone: e.target.value,
+                    });
+                  }}
+                ></Input>
+              </FormGroup>
+              <FormGroup>
+                <Label className="label-default position-absolute ml-n5 mt-2">
+                  Password:
+                </Label>
+                <Input
+                  className="form-control ml-5"
+                  type="password"
+                  placeholder="Password"
+                  value={userDetails.password}
+                  onChange={(e) =>
+                    setUserDetails({
+                      ...userDetails,
+                      password: e.target.value,
+                    })
+                  }
+                ></Input>
+              </FormGroup>
+              <FormGroup>
+                <Label className="label-default position-absolute ml-n5 mt-2">
+                  Confirm:
+                </Label>
+                <Input
+                  className="form-control ml-5"
+                  type="password"
+                  placeholder="Confirm Password"
+                  value={passwordChk}
+                  onChange={(e) => setPasswordChk(e.target.value)}
+                ></Input>
+              </FormGroup>
 
-            <Button
-              className="btn-lg btn-dark btn-block"
-              type="submit"
-              onClick={signUpHandler}
-            >
-              Sign Up
-            </Button>
-            <div className="text-center pt-3">already have an account?</div>
-            <Button
-              className="btn-lg btn-dark btn-block"
-              onClick={loginHandler}
-            >
-              Log In
-            </Button>
-          </Form>
+              <Button
+                className="btn btn-info ml-3 mr-3 mb-n3"
+                type="submit"
+                onClick={signUpHandler}
+              >
+                Sign Up
+              </Button>
+
+              <Button
+                className="btn btn-info ml-3 mr-3 mb-n3"
+                onClick={loginHandler}
+              >
+                Log In
+              </Button>
+            </Form>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

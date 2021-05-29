@@ -80,6 +80,8 @@ function NavBar(props) {
                 props.history.push("/");
               }}
             >
+              {" "}
+              <label className="text-light">{wallet && wallet.user_id}:</label>
               <button className="btn btn-info" type="submit">
                 Log Out
               </button>

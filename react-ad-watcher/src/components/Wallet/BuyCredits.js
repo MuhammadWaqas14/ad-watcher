@@ -118,7 +118,7 @@ function BuyCredits(props) {
             });
           }}
         ></input>
-        <label for="floatingInput1">Transaction ID:</label>
+        <label htmlFor="floatingInput1">Transaction ID:</label>
       </div>
       {errors && errors.amount !== "" && (
         <label className="alert-danger">{errors.amount}</label>

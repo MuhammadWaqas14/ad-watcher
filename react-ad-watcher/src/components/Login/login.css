@@ -1,18 +1,7 @@
-.login-form {
-  vertical-align: middle;
+.image-logo {
+  position: absolute;
   width: 100%;
-  max-width: 350px;
-  margin: auto auto;
-}
-
-.cd-bg {
-  color: black;
-  background: transparent !important;
-  background-image: linear-gradient(
-    rgb(104, 104, 104),
-    rgba(100, 100, 100, 0.25)
-  ) !important;
-}
-.cd-body {
-  padding: 0 !important;
+  height: 100%;
+  margin-top: 8%;
+  margin-left: 8%;
 }

@@ -24,13 +24,12 @@ function ReportPost(props) {
     })
       .then((res) => {
         setUser(res.data);
-        console.log(user);
       })
       .catch((err) => {
         props.setAuth("");
         props.history.push("/login");
       });
-  }, [props, user]);
+  }, [props]);
 
   const sendReport = (report) => {
     Axios.post("/api/reports/create", report, {
@@ -39,13 +38,11 @@ function ReportPost(props) {
       },
     })
       .then((res) => {
-        console.log(res);
         props.history.push("/");
       })
       .catch((err) => {
         props.history.push("/");
         alert("Error sending report try again later");
-        console.log(err);
       });
   };
   const getReport = () => {
@@ -53,7 +50,6 @@ function ReportPost(props) {
       setError("");
       setReport({ ...report, reason: "it's spam", user_id: user.user_name });
       setReport((report) => {
-        console.log(report);
         sendReport(report);
         return report;
       });
@@ -65,7 +61,6 @@ function ReportPost(props) {
         user_id: user.user_name,
       });
       setReport((report) => {
-        console.log(report);
         sendReport(report);
         return report;
       });
@@ -77,7 +72,6 @@ function ReportPost(props) {
         user_id: user.user_name,
       });
       setReport((report) => {
-        console.log(report);
         sendReport(report);
         return report;
       });
@@ -89,7 +83,6 @@ function ReportPost(props) {
         user_id: user.user_name,
       });
       setReport((report) => {
-        console.log(report);
         sendReport(report);
         return report;
       });
@@ -110,60 +103,69 @@ function ReportPost(props) {
   }, [fetchUser, user]);
   return (
     <div className="container">
-      <h1>Report Post</h1>
-      <label>Why are you reporting this post?</label>
-      <div className="form-check">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="flexRadioDefault"
-          id="flexRadioDefault1"
-        />
-        <label className="form-check-label" htmlFor="flexRadioDefault1">
-          it's spam
-        </label>
+      <div className="card m-5 align-content-center ">
+        <h1 className="class-header card-title  m-3 text-center display-4 bg-info text-light">
+          Report Post
+        </h1>
+        <div className="card-body ml-5">
+          <label className="m-2">Why are you reporting this post?</label>
+          <div className="form-check ml-3 mt-2">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault1"
+            />
+            <label className="form-check-label" htmlFor="flexRadioDefault1">
+              it's spam
+            </label>
+          </div>
+          <div className="form-check ml-3 mt-2">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault2"
+            />
+            <label className="form-check-label" htmlFor="flexRadioDefault2">
+              Nudity or sexual activity
+            </label>
+          </div>
+          <div className="form-check ml-3 mt-2">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault3"
+            />
+            <label className="form-check-label" htmlFor="flexRadioDefault3">
+              Violence or dangerous organizations
+            </label>
+          </div>
+          <div className="form-check ml-3 mt-2">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault4"
+            />
+            <label className="form-check-label" htmlFor="flexRadioDefault4">
+              Sale of illegal or regulated Goods
+            </label>
+          </div>
+          {error !== "" && (
+            <h6 className="alert-danger w-50 ml-3 mt-2">
+              Please Select a Reason for reporting
+            </h6>
+          )}
+          <button
+            className="btn btn-info mt-3 ml-5"
+            onClick={() => getReport()}
+          >
+            Report
+          </button>
+        </div>
       </div>
-      <div className="form-check">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="flexRadioDefault"
-          id="flexRadioDefault2"
-        />
-        <label className="form-check-label" htmlFor="flexRadioDefault2">
-          Nudity or sexual activity
-        </label>
-      </div>
-      <div className="form-check">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="flexRadioDefault"
-          id="flexRadioDefault3"
-        />
-        <label className="form-check-label" htmlFor="flexRadioDefault3">
-          Violence or dangerous organizations
-        </label>
-      </div>
-      <div className="form-check">
-        <input
-          className="form-check-input"
-          type="radio"
-          name="flexRadioDefault"
-          id="flexRadioDefault4"
-        />
-        <label className="form-check-label" htmlFor="flexRadioDefault4">
-          Sale of illegal or regulated Goods
-        </label>
-      </div>
-      {error !== "" && (
-        <h6 className="alert-danger w-25">
-          Please state a Reason for reporting
-        </h6>
-      )}
-      <button className="btn btn-dark" onClick={() => getReport()}>
-        Report
-      </button>
     </div>
   );
 }

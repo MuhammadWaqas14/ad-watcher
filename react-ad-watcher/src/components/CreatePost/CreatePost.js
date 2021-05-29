@@ -70,12 +70,10 @@ function CreatePost(props) {
           },
         })
           .then((res) => {
-            console.log(res);
             props.history.push("/");
           })
           .catch((err) => {
             props.history.push("/");
-            console.log(err);
           });
         return newWallet;
       });
@@ -91,7 +89,6 @@ function CreatePost(props) {
           setError(true);
           props.history.push("/");
           alert("Error Posting Please Try Again Later");
-          console.log(err);
         });
     } else {
       setError(true);
@@ -120,7 +117,7 @@ function CreatePost(props) {
       .then((res) => {
         setPost({ ...posts, filepath: res.data.secure_url });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   };
   const backHandler = (e) => {
     e.preventDefault();
