@@ -95,22 +95,22 @@ function AdminPanel(props) {
   ]);
 
   return (
-    <div className="container">
-      <h3 className="text-center alert-success mt-4 mb-4">
-        Welcome to Admin Panel For Ad Watcher
-      </h3>
-
-      <Card className="card col-12 text-center mt-3 mb-3 card-division">
-        <label className="card-header">Content Reports</label>
+    <div className="container card-containerap">
+      <Card className="card shadow col-12 text-center mt-3 mb-3 card-division">
+        <h3 className="card-title bg-info text-light pr-4 pt-2 pl-2 pb-2 mt-n2 ml-n4 mr-n4 mb-n1 text-center">
+          <span>Content Reports</span>
+        </h3>
         <div className="card-body h-50 ">
           <Card className="card">
             <ul className="list-unstyled text-left">
               {reports &&
                 reports.map((report) => (
                   <li key={report._id} className="alert-danger pb-3 mt-3 mb-3">
-                    <label className="card-body w-75 h-auto">
-                      Reported by {report.user_id} for the reason:{" "}
-                      {report.reason}.
+                    <label className="card-body w-50 h-auto">
+                      Reported by{" "}
+                      <span className="font-weight-bold">{report.user_id}</span>{" "}
+                      for the reason:{" "}
+                      <span className="font-weight-bold">{report.reason}</span>.
                     </label>
                   </li>
                 ))}
@@ -124,8 +124,10 @@ function AdminPanel(props) {
         </div>
       </Card>
 
-      <Card className="card col-12 text-center mt-4 card-division ">
-        <label className="card-header">Credit Requests</label>
+      <Card className="card shadow col-12 text-center mt-4 card-division ">
+        <h3 className="card-title bg-info text-light pr-4 pt-2 pl-2 pb-2 mt-n2 ml-n4 mr-n4 mb-n1 text-center">
+          <span>Credit Requets</span>
+        </h3>
         <div className="card-body h-50 ">
           <Card className="card">
             <ul className="list-unstyled text-left">
@@ -135,10 +137,18 @@ function AdminPanel(props) {
                     key={cRequest._id}
                     className="alert-success pb-3 mt-3 mb-3"
                   >
-                    <label className="card-body w-75 h-auto">
-                      {cRequest.user_id} has requested {cRequest.amount} credits
-                      by performing a transaction with ID:{" "}
-                      {cRequest.transaction_id}
+                    <label className="card-body w-50 h-auto">
+                      <span className="font-weight-bold">
+                        {cRequest.user_id}
+                      </span>{" "}
+                      has requested{" "}
+                      <span className="font-weight-bold">
+                        {cRequest.amount}
+                      </span>{" "}
+                      credits by performing a transaction with{" "}
+                      <span className="font-weight-bold">
+                        ID: {cRequest.transaction_id}
+                      </span>
                     </label>
                     <div className="p-2 mt-2 float-right">
                       <button className="btn btn-success m-2">Approve</button>
@@ -148,7 +158,7 @@ function AdminPanel(props) {
                 ))}
             </ul>
             <div className="p-2 mt-2 text-center">
-              <a className="link-secondary" href="/admin-panel/credit-requests">
+              <a className="" href="/admin-panel/credit-requests">
                 see more...
               </a>
             </div>
@@ -156,7 +166,9 @@ function AdminPanel(props) {
         </div>
       </Card>
       <Card className="card col-12 text-center mt-4 card-division">
-        <label className="card-header">Withdraw Requests</label>
+        <h3 className="card-title bg-info text-light pr-4 pt-2 pl-2 pb-2 mt-n2 ml-n4 mr-n4 mb-n1 text-center">
+          <span>Withdraw Requests</span>
+        </h3>
         <div className="card-body h-50 ">
           <Card className="card">
             <ul className="list-unstyled text-left">
@@ -164,12 +176,25 @@ function AdminPanel(props) {
                 withdrawRequests.map((wRequest) => (
                   <li
                     key={wRequest._id}
-                    className="alert-success pb-3 mt-3 mb-3"
+                    className="alert-warning pb-3 mt-3 mb-3"
                   >
-                    <label className="card-body w-75 h-auto">
-                      {wRequest.user_id} has requested {wRequest.amount} cash in
-                      account {wRequest.account} through
-                      EasyPaisa/JazzCash/UPaisa Account.
+                    <label className="card-body w-50 h-auto">
+                      <span className="font-weight-bold">
+                        {wRequest.user_id}
+                      </span>{" "}
+                      has requested{" "}
+                      <span className="font-weight-bold">
+                        {wRequest.amount}
+                      </span>{" "}
+                      cash in account{" "}
+                      <span className="font-weight-bold">
+                        {wRequest.account}
+                      </span>{" "}
+                      through{" "}
+                      <span className="font-weight-bold">
+                        EasyPaisa/JazzCash/UPaisa
+                      </span>{" "}
+                      Account.
                     </label>
                     <div className="p-2 mt-2 float-right">
                       <button className="btn btn-success m-2">Approve</button>

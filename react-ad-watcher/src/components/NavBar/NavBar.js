@@ -1,6 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 function NavBar(props) {
+  const [dashActive, setDashActive] = useState("nav-link");
+  const [CRpActive, setCRpActive] = useState("nav-link");
+  const [CRqActive, setCRqActive] = useState("nav-link");
+  const [WRActive, setWRActive] = useState("nav-link");
+  const [usersActive, setUsersActive] = useState("nav-link");
+  const url = window.location.pathname;
+
+  useEffect(() => {
+    if (url.substring(url.lastIndexOf("/") + 1) === "admin-panel") {
+      setDashActive("nav-link active");
+    } else if (url.substring(url.lastIndexOf("/") + 1) === "content-reports") {
+      setCRpActive("nav-link  active");
+    } else if (url.substring(url.lastIndexOf("/") + 1) === "credit-requests") {
+      setCRqActive("nav-link active");
+    } else if (
+      url.substring(url.lastIndexOf("/") + 1) === "withdraw-requests"
+    ) {
+      setWRActive("nav-link active");
+    } else if (url.substring(url.lastIndexOf("/") + 1) === "users") {
+      setUsersActive("nav-link active");
+    }
+  }, [url]);
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-info">
@@ -18,27 +41,31 @@ function NavBar(props) {
           <div className="collapse navbar-collapse" id="nav">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link" aria-current="page" href="/admin-panel">
+                <a
+                  className={dashActive}
+                  aria-current="page"
+                  href="/admin-panel"
+                >
                   Dashboard
                 </a>
               </li>
-              <li className="nav-item active">
-                <a className="nav-link" href="/admin-panel/content-reports">
+              <li className="nav-item">
+                <a className={CRpActive} href="/admin-panel/content-reports">
                   Content Reports
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/admin-panel/credit-requests">
+                <a className={CRqActive} href="/admin-panel/credit-requests">
                   Credit Requests
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/admin-panel/withdraw-requests">
+                <a className={WRActive} href="/admin-panel/withdraw-requests">
                   Withdraw Requests
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/admin-panel/users">
+                <a className={usersActive} href="/admin-panel/users">
                   Users
                 </a>
               </li>

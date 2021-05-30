@@ -129,10 +129,11 @@ function ContentReports(props) {
   };
 
   return (
-    <div className="container">
-      <h1 className="display-4 text-center">Content Reports </h1>
-      <Card className="card col-12 text-center mt-3 mb-3">
-        <label className="card-header">Content Reports</label>
+    <div className="container card-containerap">
+      <Card className="card col-12 text-center mt-3 mb-3 pb-5">
+        <h1 className="card-title bg-info text-light pr-4 pt-2 pl-2 pb-2 mt-n2 ml-n4 mr-n4 mb-n1 text-center">
+          <span>Content Reports</span>
+        </h1>
         <div className="card-body ">
           <Card className="card">
             <ul className="list-unstyled text-left">
@@ -140,8 +141,10 @@ function ContentReports(props) {
                 reports.map((report) => (
                   <li key={report._id} className="alert-danger pb-3 mt-3 mb-3">
                     <label className="card-body w-75 h-auto">
-                      Reported by {report.user_id} for the reason:{" "}
-                      {report.reason}.
+                      Reported by{" "}
+                      <span className="font-weight-bold">{report.user_id}</span>{" "}
+                      for the reason:{" "}
+                      <span className="font-weight-bold">{report.reason}</span>.
                     </label>
                     <div className="p-2 mt-2 float-right">
                       <button

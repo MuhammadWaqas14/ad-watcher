@@ -67,10 +67,11 @@ function WithdrawRequests(props) {
       });
   };
   return (
-    <div className="container">
-      <h1 className="display-4 text-center">Withdraw Requests</h1>
+    <div className="container card-containerap">
       <Card className="card col-12 text-center  mt-3 mb-3">
-        <label className="card-header">Withdraw Requests</label>
+        <h1 className="card-title bg-info text-light pr-4 pt-2 pl-2 pb-2 mt-n2 ml-n4 mr-n4 mb-n1 text-center">
+          <span>Withdraw Requests</span>
+        </h1>
         <div className="card-body h-50 ">
           <Card className="card">
             <ul className="list-unstyled text-left">
@@ -81,9 +82,22 @@ function WithdrawRequests(props) {
                     className="alert-success pb-3 mt-3 mb-3"
                   >
                     <label className="card-body w-75 h-auto">
-                      {wRequest.user_id} has requested {wRequest.amount} cash in
-                      account {wRequest.account} through
-                      EasyPaisa/JazzCash/UPaisa Account.
+                      <span className="font-weight-bold">
+                        {wRequest.user_id}
+                      </span>{" "}
+                      has requested{" "}
+                      <span className="font-weight-bold">
+                        {wRequest.amount}
+                      </span>{" "}
+                      cash in account{" "}
+                      <span className="font-weight-bold">
+                        {wRequest.account}
+                      </span>{" "}
+                      through{" "}
+                      <span className="font-weight-bold">
+                        EasyPaisa/JazzCash/UPaisa
+                      </span>{" "}
+                      Account.
                     </label>
                     <div className="p-2 mt-2 float-right">
                       <button

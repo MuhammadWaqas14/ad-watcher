@@ -29,33 +29,37 @@ function Users(props) {
   }, [fetchUser, users, props]);
 
   return (
-    <div>
-      <h1 className="display-4 text-center m-3">Users</h1>
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">User Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Phone</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users &&
-            users.map((user) => (
-              <tr key={user._id}>
-                <th scope="row">{users.indexOf(user) + 1}</th>
-                <td>{user.first_name}</td>
-                <td>{user.last_name}</td>
-                <td>{user.user_name}</td>
-                <td>{user.email}</td>
-                <td>{user.phone}</td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+    <div className="container card-containerap">
+      <div className="card col-12 text-center  mt-3 mb-3">
+        <h1 className="card-title bg-info text-light pr-4 pt-2 pl-2 pb-2 mt-n3 ml-n4 mr-n4 text-center">
+          <span>Users</span>
+        </h1>
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">User Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users &&
+              users.map((user) => (
+                <tr key={user._id}>
+                  <th scope="row">{users.indexOf(user) + 1}</th>
+                  <td>{user.first_name}</td>
+                  <td>{user.last_name}</td>
+                  <td>{user.user_name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.phone}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
