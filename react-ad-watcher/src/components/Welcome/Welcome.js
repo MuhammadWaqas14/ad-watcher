@@ -268,6 +268,7 @@ function Welcome(props) {
                         playsInLine
                         src={post.filepath}
                         clickable="false"
+                        muted
                         onContextMenu={(e) => e.preventDefault()}
                       >
                         <BigPlayButton position="center" />
