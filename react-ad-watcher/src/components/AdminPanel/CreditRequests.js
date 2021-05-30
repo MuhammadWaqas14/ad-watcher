@@ -7,6 +7,7 @@ function CreditRequests(props) {
   const [user, setUser] = useState();
   const [creditRequests, setCreditRequests] = useState();
   const [currentRequest, setCurrentRequest] = useState();
+  const [wallet, setWallet] = useState();
 
   const fetchUser = useCallback(async () => {
     await Axios.get("/api/posts/user", {
@@ -52,6 +53,40 @@ function CreditRequests(props) {
   }, [fetchUser, user, props, fetchCreditRequests, currentRequest]);
 
   const deleteRequest = async (req) => {
+    await Axios.get(`/api/wallets/${req.user_id}`, {
+      headers: {
+        Authorization: `${props.authToken}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+      .then((res) => {
+        setWallet(res.data[0]);
+        setWallet((wallet) => {
+          wallet._id = wallet._id;
+          wallet.phone = wallet.phone;
+          wallet.total_trans = wallet.total_trans;
+          wallet.user_id = wallet.user_id;
+          wallet.credits = (
+            parseInt(wallet.credits) + parseInt(req.amount)
+          ).toString();
+          console.log(wallet);
+          Axios.patch(`/api/wallets/update/${wallet._id}`, wallet, {
+            headers: {
+              Authorization: `${props.authToken}`,
+            },
+          })
+            .then((res) => {})
+            .catch((err) => {
+              console.log(err);
+            });
+          return wallet;
+        });
+      })
+      .catch((err) => {
+        props.setAuth("");
+        props.history.push("/login");
+      });
+
     await Axios.delete(`/api/creditRequests/delete/${req._id}`, {
       headers: {
         Authorization: `${props.authToken}`,
@@ -69,7 +104,7 @@ function CreditRequests(props) {
 
   return (
     <div className="container card-containerap">
-      <Card className="card col-12 text-center  mt-3 mb-3">
+      <Card className="card shadow col-12 text-center  mt-3 mb-3">
         <h1 className="card-title bg-info text-light pr-4 pt-2 pl-2 pb-2 mt-n2 ml-n4 mr-n4 mb-n1 text-center">
           <span>Credit Requests</span>
         </h1>
@@ -102,7 +137,6 @@ function CreditRequests(props) {
                           setCurrentRequest(cRequest);
                           setCurrentRequest((req) => {
                             deleteRequest(req);
-                            console.log(currentRequest);
                             return req;
                           });
                         }}
@@ -115,7 +149,6 @@ function CreditRequests(props) {
                           setCurrentRequest(cRequest);
                           setCurrentRequest((currentRequest) => {
                             deleteRequest(currentRequest);
-                            console.log(currentRequest);
                             return currentRequest;
                           });
                         }}

@@ -18,6 +18,18 @@ router.get(
   }
 );
 
+router.get(
+  "/:username",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Wallet.find({ user_id: req.params.username })
+      .then((wallets) => res.status(200).json(wallets))
+      .catch((err) =>
+        res.status(400).json({ user: "Error fetching wallet of user" })
+      );
+  }
+);
+
 router.post(
   "/create",
   passport.authenticate("jwt", { session: false }),
@@ -49,7 +61,7 @@ router.patch(
     }
     const { credits, total_trans } = req.body;
     Wallet.findOneAndUpdate(
-      { user_id, _id: req.params.id },
+      { _id: req.params.id },
       { $set: { credits, total_trans } },
       { new: true }
     )

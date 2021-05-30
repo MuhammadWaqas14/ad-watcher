@@ -68,7 +68,7 @@ function WithdrawRequests(props) {
   };
   return (
     <div className="container card-containerap">
-      <Card className="card col-12 text-center  mt-3 mb-3">
+      <Card className="card shadow col-12 text-center  mt-3 mb-3">
         <h1 className="card-title bg-info text-light pr-4 pt-2 pl-2 pb-2 mt-n2 ml-n4 mr-n4 mb-n1 text-center">
           <span>Withdraw Requests</span>
         </h1>

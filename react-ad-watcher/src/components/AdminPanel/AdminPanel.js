@@ -9,6 +9,10 @@ function AdminPanel(props) {
   const [reports, setReports] = useState();
   const [creditRequests, setCreditRequests] = useState();
   const [withdrawRequests, setWithdrawRequests] = useState();
+  const [wallet, setWallet] = useState();
+  const [currentRequest, setCurrentRequest] = useState();
+
+  const [currentWRequest, setCurrentWRequest] = useState();
 
   const fetchUser = useCallback(async () => {
     await Axios.get("/api/posts/user", {
@@ -78,6 +82,7 @@ function AdminPanel(props) {
     if (!user) {
       fetchUser();
     }
+
     fetchReports();
     fetchCreditRequests();
     fetchWithdrawRequests();
@@ -93,6 +98,65 @@ function AdminPanel(props) {
     fetchCreditRequests,
     fetchWithdrawRequests,
   ]);
+
+  const deleteCRequest = async (req) => {
+    await Axios.get(`/api/wallets/${req.user_id}`, {
+      headers: {
+        Authorization: `${props.authToken}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+      .then((res) => {
+        setWallet(res.data[0]);
+        setWallet((wallet) => {
+          wallet._id = wallet._id;
+          wallet.phone = wallet.phone;
+          wallet.total_trans = wallet.total_trans;
+          wallet.user_id = wallet.user_id;
+          wallet.credits = (
+            parseInt(wallet.credits) + parseInt(req.amount)
+          ).toString();
+          console.log(wallet);
+          Axios.patch(`/api/wallets/update/${wallet._id}`, wallet, {
+            headers: {
+              Authorization: `${props.authToken}`,
+            },
+          })
+            .then((res) => {})
+            .catch((err) => {
+              console.log(err);
+            });
+          return wallet;
+        });
+      })
+      .catch((err) => {
+        props.setAuth("");
+        props.history.push("/login");
+      });
+
+    await Axios.delete(`/api/creditRequests/delete/${req._id}`, {
+      headers: {
+        Authorization: `${props.authToken}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+      .then((res) => {
+        window.location.reload(false);
+      })
+      .catch((err) => {});
+  };
+  const deleteWRequest = async (req) => {
+    await Axios.delete(`/api/withdrawRequests/delete/${req._id}`, {
+      headers: {
+        Authorization: `${props.authToken}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+      .then((res) => {
+        window.location.reload(false);
+      })
+      .catch((err) => {});
+  };
 
   return (
     <div className="container card-containerap">
@@ -151,8 +215,30 @@ function AdminPanel(props) {
                       </span>
                     </label>
                     <div className="p-2 mt-2 float-right">
-                      <button className="btn btn-success m-2">Approve</button>
-                      <button className="btn btn-danger m-2">Deny</button>
+                      <button
+                        className="btn btn-success m-2"
+                        onClick={() => {
+                          setCurrentRequest(cRequest);
+                          setCurrentRequest((currentRequest) => {
+                            deleteCRequest(currentRequest);
+                            return currentRequest;
+                          });
+                        }}
+                      >
+                        Approve
+                      </button>
+                      <button
+                        className="btn btn-danger m-2"
+                        onClick={() => {
+                          setCurrentRequest(cRequest);
+                          setCurrentRequest((currentRequest) => {
+                            deleteCRequest(currentRequest);
+                            return currentRequest;
+                          });
+                        }}
+                      >
+                        Deny
+                      </button>
                     </div>
                   </li>
                 ))}
@@ -197,8 +283,30 @@ function AdminPanel(props) {
                       Account.
                     </label>
                     <div className="p-2 mt-2 float-right">
-                      <button className="btn btn-success m-2">Approve</button>
-                      <button className="btn btn-danger m-2">Deny</button>
+                      <button
+                        className="btn btn-success m-2"
+                        onClick={() => {
+                          setCurrentWRequest(wRequest);
+                          setCurrentWRequest((currentWRequest) => {
+                            deleteWRequest(currentWRequest);
+                            return currentWRequest;
+                          });
+                        }}
+                      >
+                        Approve
+                      </button>
+                      <button
+                        className="btn btn-danger m-2"
+                        onClick={() => {
+                          setCurrentWRequest(wRequest);
+                          setCurrentWRequest((currentWRequest) => {
+                            deleteWRequest(currentWRequest);
+                            return currentWRequest;
+                          });
+                        }}
+                      >
+                        Deny
+                      </button>
                     </div>
                   </li>
                 ))}
