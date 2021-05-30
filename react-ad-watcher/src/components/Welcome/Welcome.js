@@ -1,5 +1,11 @@
 import "../../../node_modules/video-react/dist/video-react.css";
-import { Player, Shortcut, ControlBar, BigPlayButton } from "video-react";
+import {
+  Player,
+  Shortcut,
+  ControlBar,
+  BigPlayButton,
+  VolumeMenuButton,
+} from "video-react";
 import Axios from "axios";
 import React, { useState, useEffect, useCallback } from "react";
 import { DropdownMenu, DropdownItem } from "reactstrap";
@@ -163,8 +169,8 @@ function Welcome(props) {
                         <>
                           <Player
                             contextMenu="none"
-                            id="postContent"
-                            playsInLine
+                            id="postContent1"
+                            muted={true}
                             autoPlay
                             src={current.filepath}
                             onContextMenu={(e) => e.preventDefault()}
@@ -172,8 +178,10 @@ function Welcome(props) {
                             <BigPlayButton position="center" disabled={true} />
                             <ControlBar
                               disableDefaultControls={true}
-                              disableCompletely={true}
-                            />
+                              //disableCompletely={true}
+                            >
+                              <VolumeMenuButton />
+                            </ControlBar>
                             <Shortcut clickable={false} dblclickable={false} />
                           </Player>
                         </>
@@ -258,20 +266,18 @@ function Welcome(props) {
                       onClick={(e) => {
                         e.preventDefault();
                         setCurrent(post);
-                        console.log(current);
                         toggle();
                       }}
                     >
                       <Player
                         contextMenu="none"
                         id="postContent"
-                        playsInLine
                         src={post.filepath}
-                        clickable="false"
-                        muted
+                        muted={true}
+                        clickable={false}
                         onContextMenu={(e) => e.preventDefault()}
                       >
-                        <BigPlayButton position="center" />
+                        <BigPlayButton position="center" disabled />
                         <ControlBar
                           disableDefaultControls={true}
                           disableCompletely={true}
@@ -284,7 +290,6 @@ function Welcome(props) {
                       onClick={(e) => {
                         e.preventDefault();
                         setCurrent(post);
-                        console.log(current);
                         toggle();
                       }}
                     >
