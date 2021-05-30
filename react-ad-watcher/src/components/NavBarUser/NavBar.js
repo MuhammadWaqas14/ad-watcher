@@ -5,7 +5,7 @@ function NavBar(props) {
   const [wallet, setWallet] = useState();
   const [homeActive, setHomeActive] = useState("nav-link");
   const [CPActive, setCPActive] = useState("nav-link");
-  const [walletActive, setWalletActive] = useState("nav-link");
+  const [walletActive, setWalletActive] = useState("nav-link dropdown-toggle");
   const url = window.location.pathname;
 
   const fetchWallet = useCallback(async () => {
@@ -30,9 +30,13 @@ function NavBar(props) {
     ) {
       setHomeActive("nav-link active");
     } else if (url.substring(url.lastIndexOf("/") + 1) === "create-post") {
-      setCPActive("nav-link active");
-    } else if (url.substring(url.lastIndexOf("/") + 1) === "wallet") {
-      setWalletActive("nav-link active");
+      setCPActive("nav-link  active");
+    } else if (
+      url.substring(url.lastIndexOf("/") + 1) === "wallet" ||
+      url.substring(url.lastIndexOf("/") + 1) === "buy-credits" ||
+      url.substring(url.lastIndexOf("/") + 1) === "withdraw-cash"
+    ) {
+      setWalletActive("nav-link dropdown-toggle active");
     }
   }, [setHomeActive, setCPActive, setWalletActive, url]);
   useEffect(() => {
@@ -67,10 +71,35 @@ function NavBar(props) {
                   Create Post
                 </a>
               </li>
-              <li className="nav-item">
-                <a className={walletActive} href="/wallet">
+              <li className="nav-item dropdown">
+                <a
+                  className={walletActive}
+                  href="/wallet"
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
                   {wallet && wallet.credits} Credits
                 </a>
+                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a className="dropdown-item btn-secondary" href="/wallet">
+                    Wallet
+                  </a>
+                  <a
+                    className="dropdown-item btn-secondary"
+                    href="/wallet/buy-credits"
+                  >
+                    Buy Credits
+                  </a>
+                  <a
+                    className="dropdown-item btn-secondary"
+                    href="/wallet/withdraw-cash"
+                  >
+                    Withdraw Cash
+                  </a>
+                </div>
               </li>
             </ul>
             <form

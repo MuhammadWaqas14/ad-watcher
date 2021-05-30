@@ -1,9 +1,5 @@
-.post-card {
-  color: black;
-  background-color: #ebebeb;
-  width: 100%;
-  max-width: 900px;
-  height: max-content;
-  margin: 26px auto;
-  padding-bottom: 50px;
+.card-container {
+  position: relative;
+  margin-top: 5%;
+  margin-bottom: -3%;
 }

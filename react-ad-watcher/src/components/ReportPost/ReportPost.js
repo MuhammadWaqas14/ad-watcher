@@ -102,14 +102,16 @@ function ReportPost(props) {
     }
   }, [fetchUser, user]);
   return (
-    <div className="container">
-      <div className="card m-5 align-content-center ">
-        <h1 className="class-header card-title  m-3 text-center display-4 bg-info text-light">
-          Report Post
+    <div className="container card-containercp">
+      <div className="card shadow mt-3">
+        <h1 className="card-title bg-info text-light pr-4 pt-2 pl-2 pb-2 mt-n2 ml-n2 mr-n2 mb-n1 text-center">
+          <span>Report Post</span>
         </h1>
-        <div className="card-body ml-5">
-          <label className="m-2">Why are you reporting this post?</label>
-          <div className="form-check ml-3 mt-2">
+        <div className="card-body m-auto pt-5 pb-5">
+          <h4 className="mb-3 pt-3 pb-3 font-weight-light">
+            Why are you reporting this post?
+          </h4>
+          <div className="form-check  mt-2">
             <input
               className="form-check-input"
               type="radio"
@@ -120,7 +122,7 @@ function ReportPost(props) {
               it's spam
             </label>
           </div>
-          <div className="form-check ml-3 mt-2">
+          <div className="form-check mt-2">
             <input
               className="form-check-input"
               type="radio"
@@ -131,7 +133,7 @@ function ReportPost(props) {
               Nudity or sexual activity
             </label>
           </div>
-          <div className="form-check ml-3 mt-2">
+          <div className="form-check mt-2">
             <input
               className="form-check-input"
               type="radio"
@@ -142,7 +144,7 @@ function ReportPost(props) {
               Violence or dangerous organizations
             </label>
           </div>
-          <div className="form-check ml-3 mt-2">
+          <div className="form-check mt-2">
             <input
               className="form-check-input"
               type="radio"
@@ -154,15 +156,18 @@ function ReportPost(props) {
             </label>
           </div>
           {error !== "" && (
-            <h6 className="alert-danger w-50 ml-3 mt-2">
+            <h6 className="alert-danger w-75 mt-3">
               Please Select a Reason for reporting
             </h6>
           )}
-          <button
-            className="btn btn-info mt-3 ml-5"
-            onClick={() => getReport()}
-          >
+          <button className="btn btn-info m-4" onClick={() => getReport()}>
             Report
+          </button>
+          <button
+            className="btn btn-info m-4"
+            onClick={() => props.history.push("/")}
+          >
+            Back
           </button>
         </div>
       </div>

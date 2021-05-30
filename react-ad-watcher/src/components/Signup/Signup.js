@@ -77,7 +77,7 @@ function Signup(props) {
       <h1 className="display-3 card-header text-center mt-5 text-light bg-info">
         AdWatcher
       </h1>
-      <div className="card ">
+      <div className="card shadow ">
         <div className="navbar-link image-logo">
           <img src={Logo} width="50%" height="50%" alt="Ad Watcher"></img>
         </div>

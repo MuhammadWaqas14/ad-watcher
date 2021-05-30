@@ -26,15 +26,18 @@ function UpdatePost(props) {
     filepath: "",
   });
   const [error, setError] = useState(false);
-
+  const [errors, setErrors] = useState({
+    title: "",
+    description: "",
+    credits: "",
+  });
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(posts);
     if (
-      posts.title !== "" &&
-      posts.body !== "" &&
+      errors.title !== "" &&
+      errors.description !== "" &&
       posts.filepath !== "" &&
-      posts.credits !== ""
+      errors.credits !== ""
     ) {
       await Axios.patch(`/api/posts/update/${posts._id}`, posts, {
         headers: {
@@ -78,18 +81,18 @@ function UpdatePost(props) {
 
   return (
     <>
-      <div className="card border-0 shadow p-10 cd-bg">
-        <div className="card-body p-10 mt-5 cd-body">
+      <div className="container card-containercp">
+        <div className="card shadow mt-5">
+          <h1 className="card-title bg-info text-light pr-4 pt-2 pl-2 pb-2 mt-n2 ml-n2 mr-n2 mb-n1 text-center">
+            <span>Update Post</span>
+          </h1>
           <Form className="create-post-form p-3" onSubmit={submitHandler}>
-            <h1>
-              <span className="font-weight-bold">Create Post</span>
-            </h1>
             {error && (
               <span
-                className="font-weight-bold mt-6 mb-6"
+                className="font-weight-bold alert-danger"
                 style={{ color: "red" }}
               >
-                ERROR CHECK Upload Details!
+                ERROR Check Upload Details!
               </span>
             )}
             <FormGroup>
@@ -99,9 +102,17 @@ function UpdatePost(props) {
                 value={posts.title ? posts.title : "Title"}
                 placeholder="Title"
                 onChange={(e) => {
-                  setPost({ ...posts, title: e.target.value });
+                  if (e.target.value.trim() === "") {
+                    setErrors({ ...errors, title: "Title required* " });
+                  } else {
+                    setErrors({ ...errors, title: "" });
+                  }
+                  setPost({ ...posts, title: e.target.value.trim() });
                 }}
               />
+              {errors && errors.title !== "" && (
+                <label className="alert-danger mt-2">{errors.title}</label>
+              )}
             </FormGroup>
 
             <FormGroup>
@@ -113,9 +124,22 @@ function UpdatePost(props) {
                 value={posts.body ? posts.body : "Post Description"}
                 placeholder="Description"
                 onChange={(e) => {
-                  setPost({ ...posts, body: e.target.value });
+                  if (e.target.value.trim() === "") {
+                    setErrors({
+                      ...errors,
+                      description: "Description required* ",
+                    });
+                  } else {
+                    setErrors({ ...errors, description: "" });
+                  }
+                  setPost({ ...posts, body: e.target.value.trim() });
                 }}
               />
+              {errors && errors.description !== "" && (
+                <label className="alert-danger mt-2">
+                  {errors.description}
+                </label>
+              )}
             </FormGroup>
             <FormGroup>
               <Label className="mt-3">Set Credits</Label>
@@ -124,9 +148,25 @@ function UpdatePost(props) {
                 value={posts.credits ? parseInt(posts.credits) : "Credits"}
                 placeholder="Enter Credits to be divided"
                 onChange={(e) => {
+                  if (
+                    e.target.value.toString().trim() === "" ||
+                    e.target.value % 5 !== 0 ||
+                    e.target.value < 50
+                  ) {
+                    setErrors({
+                      ...errors,
+                      credits:
+                        "Invalid Credits minimum 50 & multiples of 5 required* ",
+                    });
+                  } else {
+                    setErrors({ ...errors, credits: "" });
+                  }
                   setPost({ ...posts, credits: e.target.value });
                 }}
               />
+              {errors && errors.credits !== "" && (
+                <label className="alert-danger mt-2">{errors.credits}</label>
+              )}
             </FormGroup>
             <Card>
               {posts.filepath !== "" && posts.filepath.indexOf("video") >= 0 ? (
@@ -156,11 +196,11 @@ function UpdatePost(props) {
               )}
             </Card>
             <FormGroup>
-              <Button className="mt-4 mb-3" type="submit">
+              <Button className="btn btn-info mt-4 mb-3" type="submit">
                 Update
               </Button>
               <Button
-                className="mt-4 mb-3 ml-4"
+                className=" btn btn-info mt-4 mb-3 ml-4"
                 type="back"
                 onClick={backHandler}
               >

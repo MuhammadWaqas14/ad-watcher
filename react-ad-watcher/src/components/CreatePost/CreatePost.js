@@ -124,13 +124,13 @@ function CreatePost(props) {
     props.history.push("/");
   };
   return (
-    <>
-      <div className="card border-0 shadow p-10 cd-bg">
-        <div className="card-body p-10 mt-5 cd-body">
-          <Form className="create-post-form p-3" onSubmit={submitHandler}>
-            <h1>
-              <span className="font-weight-bold">Create Post</span>
-            </h1>
+    <div className="container card-containercp">
+      <div className="card shadow mt-5">
+        <h1 className="card-title bg-info text-light pr-4 pt-2 pl-2 pb-2 mt-n2 ml-n2 mr-n2 mb-n1 text-center">
+          <span>Create Post</span>
+        </h1>
+        <div className="card-body">
+          <Form className="create-post-form" onSubmit={submitHandler}>
             {error && (
               <span
                 className="font-weight-bold mt-6 mb-6"
@@ -142,11 +142,12 @@ function CreatePost(props) {
             <FormGroup>
               <Label className="mt-3">Title</Label>
               <Input
+                className="form-control"
                 type="text"
                 value={title}
                 placeholder="Title"
                 onChange={(e) => {
-                  setPost({ ...posts, title: e.target.value });
+                  setPost({ ...posts, title: e.target.value.trim() });
                 }}
               />
             </FormGroup>
@@ -156,33 +157,27 @@ function CreatePost(props) {
                 Description
               </Label>
               <Input
+                className="form-control"
                 type="textarea"
                 value={body}
                 placeholder="Description"
                 onChange={(e) => {
-                  setPost({ ...posts, body: e.target.value });
+                  setPost({ ...posts, body: e.target.value.trim() });
                 }}
               />
             </FormGroup>
             <FormGroup>
               <Label className="mt-3">Set Credits</Label>
-              <br></br>
-              {errorMsg !== "" && (
-                <span
-                  className="font-weight-bold mt-6 mb-6"
-                  style={{ color: "red" }}
-                >
-                  {errorMsg}
-                </span>
-              )}
               <Input
+                className="form-control mb-2"
                 type="number"
                 value={credits}
                 placeholder="Enter Credits to be divided"
                 onChange={(e) => {
                   setPost({ ...posts, credits: e.target.value });
-
-                  if (
+                  if (e.target.value % 5 !== 0) {
+                    setErrorMsg("Credits should be multiples of 5");
+                  } else if (
                     parseInt(wallet.credits) >= e.target.value &&
                     e.target.value >= 50
                   ) {
@@ -192,6 +187,14 @@ function CreatePost(props) {
                   }
                 }}
               />
+              {errorMsg !== "" && (
+                <span
+                  className="font-weight-bold alert-danger mt-3 mb-n5 "
+                  style={{ color: "red" }}
+                >
+                  {errorMsg}
+                </span>
+              )}
             </FormGroup>
             <FormGroup>
               <Input
@@ -205,14 +208,14 @@ function CreatePost(props) {
                 <Progress percentage={uploadPercentage}></Progress>
               )}
               <Button
-                className="mt-4 mb-3"
+                className="mt-4 mb-3 btn btn-info"
                 type="submit"
                 disabled={submitButtonState}
               >
                 CREATE
               </Button>
               <Button
-                className="mt-4 mb-3 ml-4"
+                className="mt-4 mb-3 ml-4 btn-info btn"
                 type="back"
                 onClick={backHandler}
               >
@@ -222,7 +225,7 @@ function CreatePost(props) {
           </Form>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

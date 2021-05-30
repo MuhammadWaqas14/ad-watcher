@@ -2,7 +2,7 @@ import "../../../node_modules/video-react/dist/video-react.css";
 import { Player, Shortcut, ControlBar, BigPlayButton } from "video-react";
 import Axios from "axios";
 import React, { useState, useEffect, useCallback } from "react";
-import { Button, DropdownMenu, DropdownItem } from "reactstrap";
+import { DropdownMenu, DropdownItem } from "reactstrap";
 import {
   Modal,
   ModalHeader,
@@ -129,43 +129,12 @@ function Welcome(props) {
       .catch((err) => {});
   };
 
-  const walletSubmit = () => {
-    props.history.push("/wallet");
-  };
+  // const walletSubmit = () => {
+  //   props.history.push("/wallet");
+  // };
 
   return (
-    <div className="posts-home">
-      {wallet ? (
-        <Button
-          style={{ maxWidth: "200px", margin: "7px" }}
-          className="btn-dark"
-          onClick={walletSubmit}
-        >
-          Credits: {wallet.credits}
-        </Button>
-      ) : (
-        <></>
-      )}
-
-      <Button
-        style={{ maxWidth: "200px", margin: "7px" }}
-        className="btn-dark"
-        onClick={() => {
-          props.history.push("/create-post");
-        }}
-      >
-        Create Post
-      </Button>
-      <Button
-        style={{ maxWidth: "200px", margin: "7px" }}
-        className="btn-dark"
-        onClick={() => {
-          props.setAuth("");
-          props.history.push("/login");
-        }}
-      >
-        Log Out
-      </Button>
+    <div className="posts-home card-container">
       {posts.length !== 0 ? (
         <ul>
           {posts.map((post) => (
@@ -176,74 +145,68 @@ function Welcome(props) {
               }}
             >
               <div className="container">
-                <div>
-                  {modal ? (
-                    <Modal
-                      contextMenu="none"
-                      onContextMenu={(e) => e.preventDefault()}
-                      isOpen={modal}
-                      toggle={toggle}
-                      centered="true"
-                      size="lg"
-                      backdrop="static"
-                      keyboard={false}
-                      external={externalCloseBtn}
-                    >
-                      <ModalHeader>{current.title}</ModalHeader>
-                      <ModalBody>
-                        {current.filepath.indexOf("video") >= 0 ? (
-                          <>
-                            <Player
-                              contextMenu="none"
-                              id="postContent"
-                              playsInLine
-                              autoPlay
-                              src={current.filepath}
-                              onContextMenu={(e) => e.preventDefault()}
-                            >
-                              <BigPlayButton
-                                position="center"
-                                disabled={true}
-                              />
-                              <ControlBar
-                                disableDefaultControls={true}
-                                disableCompletely={true}
-                              />
-                              <Shortcut
-                                clickable={false}
-                                dblclickable={false}
-                              />
-                            </Player>
-                          </>
-                        ) : (
-                          <CardImg
-                            className="image-fluid"
-                            style={{
-                              maxHeight: "800px",
-                            }}
-                            width="auto"
-                            height="100%"
+                {modal && (
+                  <Modal
+                    contextMenu="none"
+                    onContextMenu={(e) => e.preventDefault()}
+                    isOpen={modal}
+                    toggle={toggle}
+                    centered="true"
+                    size="lg"
+                    backdrop="static"
+                    keyboard={false}
+                    external={externalCloseBtn}
+                  >
+                    <ModalHeader>{current.title}</ModalHeader>
+                    <ModalBody>
+                      {current.filepath.indexOf("video") >= 0 ? (
+                        <>
+                          <Player
+                            contextMenu="none"
+                            id="postContent"
+                            playsInLine
+                            autoPlay
                             src={current.filepath}
-                            alt="productimagehere"
-                          />
-                        )}
-                      </ModalBody>
-                    </Modal>
-                  ) : (
-                    <></>
-                  )}
-                </div>
+                            onContextMenu={(e) => e.preventDefault()}
+                          >
+                            <BigPlayButton position="center" disabled={true} />
+                            <ControlBar
+                              disableDefaultControls={true}
+                              disableCompletely={true}
+                            />
+                            <Shortcut clickable={false} dblclickable={false} />
+                          </Player>
+                        </>
+                      ) : (
+                        <CardImg
+                          className="image-fluid"
+                          style={{
+                            maxHeight: "800px",
+                          }}
+                          width="auto"
+                          height="100%"
+                          src={current.filepath}
+                          alt="productimagehere"
+                        />
+                      )}
+                    </ModalBody>
+                  </Modal>
+                )}
+
                 <Card
                   contextMenu="none"
                   onContextMenu={(e) => e.preventDefault()}
-                  className="card m-4 bg-light"
+                  className="card shadow m-4 bg-light"
                 >
                   <CardBody className="card-body">
-                    <CardTitle className="" tag="h3">
+                    <CardTitle
+                      className="card-title bg-info text-light pr-4 pt-2 pl-2 pb-2 mt-n4 ml-n4 mr-n4 mb-n1"
+                      tag="h3"
+                    >
                       {post.author}
                       <div className="float-right">
                         <button
-                          className="dropdown-toggle btn btn-outline-info btn-sm"
+                          className="dropdown-toggle btn btn-info btn-sm mr-n1"
                           data-toggle="dropdown"
                           aria-haspopup="true"
                           aria-expanded="false"
@@ -282,15 +245,13 @@ function Welcome(props) {
                       </div>
                     </CardTitle>
 
-                    <CardSubtitle
-                      tag="h6"
-                      className="mt-2 mb-2 "
-                      style={{ textColor: "gray" }}
-                    >
+                    <CardSubtitle tag="h6" className="mt-3">
                       CREDITS: {post.credits}
                     </CardSubtitle>
 
-                    <CardText>{post.body}</CardText>
+                    <CardText className="card-text mt-1 mb-n3">
+                      {post.body}
+                    </CardText>
                   </CardBody>
                   {post.filepath.indexOf("video") >= 0 ? (
                     <div
@@ -344,23 +305,25 @@ function Welcome(props) {
           ))}
         </ul>
       ) : (
-        <Card
-          className="post-card"
-          style={{
-            background: "rgba(180,180,180,0.9",
-          }}
-        >
-          <CardBody>
-            <CardTitle tag="h4">Fetching Posts</CardTitle>
-            <CardSubtitle
-              tag="h6"
-              className="mt-2 mb-2 "
-              style={{ textColor: "gray" }}
-            >
-              Create a post of your own by clicking create post
-            </CardSubtitle>
-          </CardBody>
-        </Card>
+        <div className="container">
+          <Card
+            contextMenu="none"
+            onContextMenu={(e) => e.preventDefault()}
+            className="card m-4 bg-light"
+          >
+            <CardBody className="card-body">
+              <CardTitle
+                className="card-title bg-info text-light pr-4 pt-2 pl-2 pb-2 mt-n4 ml-n4 mr-n4 mb-n1"
+                tag="h3"
+              >
+                NO POSTS TO DISPLAY RIGHT NOW
+              </CardTitle>
+              <CardSubtitle tag="h6" className="mt-3">
+                Create a post of your own by clicking Create Post
+              </CardSubtitle>
+            </CardBody>
+          </Card>
+        </div>
       )}
     </div>
   );
