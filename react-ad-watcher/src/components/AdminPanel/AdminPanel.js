@@ -126,7 +126,7 @@ function AdminPanel(props) {
 
       <Card className="card shadow col-12 text-center mt-4 card-division ">
         <h3 className="card-title bg-info text-light pr-4 pt-2 pl-2 pb-2 mt-n2 ml-n4 mr-n4 mb-n1 text-center">
-          <span>Credit Requets</span>
+          <span>Credit Requests</span>
         </h3>
         <div className="card-body h-50 ">
           <Card className="card">

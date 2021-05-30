@@ -107,7 +107,7 @@ function UpdatePost(props) {
                   } else {
                     setErrors({ ...errors, title: "" });
                   }
-                  setPost({ ...posts, title: e.target.value.trim() });
+                  setPost({ ...posts, title: e.target.value });
                 }}
               />
               {errors && errors.title !== "" && (
@@ -132,7 +132,7 @@ function UpdatePost(props) {
                   } else {
                     setErrors({ ...errors, description: "" });
                   }
-                  setPost({ ...posts, body: e.target.value.trim() });
+                  setPost({ ...posts, body: e.target.value });
                 }}
               />
               {errors && errors.description !== "" && (

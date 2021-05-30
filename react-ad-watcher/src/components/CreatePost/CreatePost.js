@@ -147,7 +147,7 @@ function CreatePost(props) {
                 value={title}
                 placeholder="Title"
                 onChange={(e) => {
-                  setPost({ ...posts, title: e.target.value.trim() });
+                  setPost({ ...posts, title: e.target.value });
                 }}
               />
             </FormGroup>
@@ -162,7 +162,7 @@ function CreatePost(props) {
                 value={body}
                 placeholder="Description"
                 onChange={(e) => {
-                  setPost({ ...posts, body: e.target.value.trim() });
+                  setPost({ ...posts, body: e.target.value });
                 }}
               />
             </FormGroup>
