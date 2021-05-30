@@ -18,14 +18,13 @@ function WithdrawCash(props) {
   });
 
   const requestWithdraw = (withdrawRequest) => {
-    if (errors.account === "" && errors.amount === "") {
+    if (withdrawRequest.account !== "" && withdrawRequest.amount % 500 === 0) {
       Axios.post("/api/withdrawRequests/create", withdrawRequest, {
         headers: {
           Authorization: `${props.authToken}`,
         },
       })
         .then((res) => {
-          console.log(res);
           alert("Submitted");
           props.history.push("/");
         })
@@ -188,7 +187,7 @@ function WithdrawCash(props) {
               <br />
               <button
                 className="btn btn-info mt-3"
-                disabled={withdrawLimitError && wallet.credits < 500}
+                disabled={wallet.credits < 500}
                 onClick={() => {
                   requestWithdraw(withdrawRequest);
                 }}
