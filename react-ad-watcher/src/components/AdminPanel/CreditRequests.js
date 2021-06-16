@@ -52,7 +52,20 @@ function CreditRequests(props) {
     }
   }, [fetchUser, user, props, fetchCreditRequests, currentRequest]);
 
-  const deleteRequest = async (req) => {
+  const deleteCRequest = async (req) => {
+    await Axios.delete(`/api/creditRequests/delete/${req._id}`, {
+      headers: {
+        Authorization: `${props.authToken}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+      .then((res) => {
+        window.location.reload(false);
+      })
+      .catch((err) => {});
+  };
+
+  const deleteUpdateCRequest = async (req) => {
     await Axios.get(`/api/wallets/${req.user_id}`, {
       headers: {
         Authorization: `${props.authToken}`,
@@ -62,10 +75,6 @@ function CreditRequests(props) {
       .then((res) => {
         setWallet(res.data[0]);
         setWallet((wallet) => {
-          wallet._id = wallet._id;
-          wallet.phone = wallet.phone;
-          wallet.total_trans = wallet.total_trans;
-          wallet.user_id = wallet.user_id;
           wallet.credits = (
             parseInt(wallet.credits) + parseInt(req.amount)
           ).toString();
@@ -76,9 +85,7 @@ function CreditRequests(props) {
             },
           })
             .then((res) => {})
-            .catch((err) => {
-              console.log(err);
-            });
+            .catch((err) => {});
           return wallet;
         });
       })
@@ -94,12 +101,9 @@ function CreditRequests(props) {
       },
     })
       .then((res) => {
-        console.log("deleted");
         window.location.reload(false);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   return (
@@ -136,7 +140,7 @@ function CreditRequests(props) {
                         onClick={() => {
                           setCurrentRequest(cRequest);
                           setCurrentRequest((req) => {
-                            deleteRequest(req);
+                            deleteUpdateCRequest(req);
                             return req;
                           });
                         }}
@@ -148,7 +152,7 @@ function CreditRequests(props) {
                         onClick={() => {
                           setCurrentRequest(cRequest);
                           setCurrentRequest((currentRequest) => {
-                            deleteRequest(currentRequest);
+                            deleteCRequest(currentRequest);
                             return currentRequest;
                           });
                         }}

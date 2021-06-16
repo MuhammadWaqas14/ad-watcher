@@ -11,7 +11,6 @@ function AdminPanel(props) {
   const [withdrawRequests, setWithdrawRequests] = useState();
   const [wallet, setWallet] = useState();
   const [currentRequest, setCurrentRequest] = useState();
-
   const [currentWRequest, setCurrentWRequest] = useState();
 
   const fetchUser = useCallback(async () => {
@@ -100,6 +99,19 @@ function AdminPanel(props) {
   ]);
 
   const deleteCRequest = async (req) => {
+    await Axios.delete(`/api/creditRequests/delete/${req._id}`, {
+      headers: {
+        Authorization: `${props.authToken}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+      .then((res) => {
+        window.location.reload(false);
+      })
+      .catch((err) => {});
+  };
+
+  const deleteUpdateCRequest = async (req) => {
     await Axios.get(`/api/wallets/${req.user_id}`, {
       headers: {
         Authorization: `${props.authToken}`,
@@ -109,10 +121,6 @@ function AdminPanel(props) {
       .then((res) => {
         setWallet(res.data[0]);
         setWallet((wallet) => {
-          wallet._id = wallet._id;
-          wallet.phone = wallet.phone;
-          wallet.total_trans = wallet.total_trans;
-          wallet.user_id = wallet.user_id;
           wallet.credits = (
             parseInt(wallet.credits) + parseInt(req.amount)
           ).toString();
@@ -123,9 +131,7 @@ function AdminPanel(props) {
             },
           })
             .then((res) => {})
-            .catch((err) => {
-              console.log(err);
-            });
+            .catch((err) => {});
           return wallet;
         });
       })
@@ -145,6 +151,7 @@ function AdminPanel(props) {
       })
       .catch((err) => {});
   };
+
   const deleteWRequest = async (req) => {
     await Axios.delete(`/api/withdrawRequests/delete/${req._id}`, {
       headers: {
@@ -220,7 +227,7 @@ function AdminPanel(props) {
                         onClick={() => {
                           setCurrentRequest(cRequest);
                           setCurrentRequest((currentRequest) => {
-                            deleteCRequest(currentRequest);
+                            deleteUpdateCRequest(currentRequest);
                             return currentRequest;
                           });
                         }}
